@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLANK — 점수 없이 마주 앉는 공간</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F5F2EC;
+      --surface: #EDEAE3;
+      --border: #D8D4CC;
+      --text: #1A1916;
+      --muted: #7A776F;
+      --dark: #1A1916;
+      --radius: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 48px;
+      background: rgba(245,242,236,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(216,212,204,0.6);
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--dark);
+      color: var(--bg) !important;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; color: var(--bg) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .hero-sub {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(20px, 3vw, 30px);
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .hero-desc {
+      max-width: 520px;
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 44px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-dark {
+      background: var(--dark);
+      color: var(--bg);
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.15s;
+    }
+
+    .btn-dark:hover { opacity: 0.85; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s;
+    }
+
+    .btn-outline:hover { background: var(--surface); }
+
+    .hero-badge {
+      margin-top: 56px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 8px 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      padding: 100px 24px;
+    }
+
+    .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 56px;
+    }
+
+    /* ── CONTEXT BAND ── */
+    .context-band {
+      background: var(--dark);
+      color: var(--bg);
+      padding: 60px 24px;
+      text-align: center;
+    }
+
+    .context-band p {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(18px, 3vw, 28px);
+      line-height: 1.5;
+      max-width: 680px;
+      margin: 0 auto;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    .context-band small {
+      display: block;
+      margin-top: 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      opacity: 0.5;
+      font-style: normal;
+      letter-spacing: 1px;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .step {
+      background: var(--surface);
+      padding: 36px 28px;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .step-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .step h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── MEMBERSHIP ── */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .plan-card.featured {
+      background: var(--dark);
+      color: var(--bg);
+      border-color: var(--dark);
+    }
+
+    .plan-name {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .plan-card.featured .plan-name { color: rgba(245,242,236,0.5); }
+
+    .plan-price {
+      font-family: 'DM Serif Display', serif;
+      font-size: 40px;
+      letter-spacing: -1px;
+      margin-bottom: 4px;
+    }
+
+    .plan-period {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .plan-card.featured .plan-period { color: rgba(245,242,236,0.5); }
+
+    .plan-features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 28px;
+    }
+
+    .plan-features li {
+      font-size: 14px;
+      color: var(--muted);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .plan-card.featured .plan-features li {
+      color: rgba(245,242,236,0.7);
+      border-bottom-color: rgba(245,242,236,0.1);
+    }
+
+    .plan-features li::before {
+      content: '—';
+      color: var(--border);
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .plan-card.featured .plan-features li::before { color: rgba(245,242,236,0.3); }
+
+    .plan-btn {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+      transition: all 0.15s;
+    }
+
+    .plan-btn:hover { background: var(--border); }
+
+    .plan-card.featured .plan-btn {
+      background: var(--bg);
+      color: var(--dark);
+      border-color: var(--bg);
+    }
+
+    .plan-card.featured .plan-btn:hover { opacity: 0.85; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .testimonial {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .testimonial blockquote {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .testimonial-author {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .testimonial-author strong {
+      display: block;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    footer .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    footer .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── DIVIDER ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 18px 20px; }
+      .nav-links { display: none; }
+      section { padding: 70px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">BLANK</div>
+  <ul class="nav-links">
+    <li><a href="#how">작동 방식</a></li>
+    <li><a href="#membership">멤버십</a></li>
+    <li><a href="#voices">후기</a></li>
+    <li><a href="#membership" class="nav-cta">시작하기</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">blankspace.kr &nbsp;·&nbsp; 2034 Seoul</div>
+  <h1 class="hero-title">
+    점수 없이<br><em>마주 앉는</em><br>공간
+  </h1>
+  <p class="hero-sub">당신의 신뢰 지수는, 여기선 필요 없습니다.</p>
+  <p class="hero-desc">
+    AI 정확도 98%의 시대. 우리는 모든 대화가 분석되고, 모든 표정이 채점되는 세상을 살고 있습니다.
+    BLANK는 그 바깥에 존재합니다.
+  </p>
+  <div class="hero-actions">
+    <a href="#membership" class="btn-dark">멤버십 둘러보기</a>
+    <a href="#how" class="btn-outline">작동 방식 보기</a>
+  </div>
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    현재 강남·마포·성수 3개 지점 운영 중
+  </div>
+</section>
+
+<!-- CONTEXT BAND -->
+<div class="context-band">
+  <p>
+    "AI 신뢰 지수 시스템 도입 이후, 한국의 대인 불안 지수는<br>
+    37% 상승했습니다. 우리는 그 반대편을 만듭니다."
+  </p>
+  <small>— BLANK 설립 선언문, 2034.03</small>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-label">작동 방식</div>
+    <h2 class="section-title">4단계로<br>완전한 공백을</h2>
+    <p class="section-desc">
+      BLANK 공간에 들어서는 순간, AI의 시선은 완전히 차단됩니다.
+      검증된 4단계 프로토콜이 그것을 보장합니다.
+    </p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">🥽</div>
+        <h3>AR 글래스 수거</h3>
+        <p>입장 전 모든 AR/스마트 웨어러블 기기를 실드 박스에 보관합니다.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">📡</div>
+        <h3>Wi-Fi 완전 차단</h3>
+        <p>패러데이 케이지 구조로 외부 신호를 100% 차단합니다.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">🔒</div>
+        <h3>저전파 인증</h3>
+        <p>공간 내 전자기장을 측정하여 무신호 환경임을 실시간 인증합니다.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">✓</div>
+        <h3>BLANK 앱 인증</h3>
+        <p>오프라인 전용 앱으로 입장이 완료됩니다. 세션은 로컬에만 저장됩니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- MEMBERSHIP -->
+<section id="membership">
+  <div class="section-inner">
+    <div class="section-label">멤버십</div>
+    <h2 class="section-title">당신에게 맞는<br>공백을 선택하세요</h2>
+    <p class="section-desc">모든 플랜은 광고 없음, 추적 없음, AI 분석 없음을 보장합니다.</p>
+    <div class="plans-grid">
+      <div class="plan-card">
+        <div class="plan-name">Basic</div>
+        <div class="plan-price">₩49,000</div>
+        <div class="plan-period">/ 월</div>
+        <ul class="plan-features">
+          <li>월 4회 방문 (1인실 2시간)</li>
+          <li>기기 실드 박스 이용</li>
+          <li>무신호 인증서 발급</li>
+          <li>커뮤니티 포럼 접근</li>
+        </ul>
+        <a href="#" class="plan-btn">Basic 시작하기</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-name">Still</div>
+        <div class="plan-price">₩89,000</div>
+        <div class="plan-period">/ 월</div>
+        <ul class="plan-features">
+          <li>월 8회 방문 (1·2인실 3시간)</li>
+          <li>프리미엄 어쿠스틱 룸</li>
+          <li>무음 카페 이용 포함</li>
+          <li>파트너 초대 1인</li>
+          <li>오프라인 워크숍 우선 예약</li>
+        </ul>
+        <a href="#" class="plan-btn">Still 시작하기</a>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Deep</div>
+        <div class="plan-price">₩149,000</div>
+        <div class="plan-period">/ 월</div>
+        <ul class="plan-features">
+          <li>무제한 방문 (전 지점)</li>
+          <li>전용 라커 & 기기 보관함</li>
+          <li>프라이빗 세션 예약 가능</li>
+          <li>파트너 초대 3인</li>
+          <li>연간 리트릿 프로그램 포함</li>
+        </ul>
+        <a href="#" class="plan-btn">Deep 시작하기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- TESTIMONIALS -->
+<section id="voices">
+  <div class="section-inner">
+    <div class="section-label">사용자 후기</div>
+    <h2 class="section-title">여기서만 들을 수<br>있는 이야기들</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <blockquote>
+          "처음 한 시간은 불안했어요. AI가 없다는 게 오히려 더 낯설었거든요. 두 번째 방문부터는 그게 해방감이었습니다."
+        </blockquote>
+        <div class="testimonial-author">
+          <strong>이 ○○</strong>
+          마케터 · 34세 · Still 멤버
+        </div>
+      </div>
+      <div class="testimonial">
+        <blockquote>
+          "신뢰 지수 때문에 첫 만남이 무서웠는데, BLANK에서 만난 사람들은 그냥 사람이었어요."
+        </blockquote>
+        <div class="testimonial-author">
+          <strong>김 ○○</strong>
+          프리랜서 디자이너 · 29세 · Basic 멤버
+        </div>
+      </div>
+      <div class="testimonial">
+        <blockquote>
+          "비즈니스 미팅을 여기서 했습니다. 점수 없이 나눈 대화가 얼마나 솔직해질 수 있는지 깨달았습니다."
+        </blockquote>
+        <div class="testimonial-author">
+          <strong>박 ○○</strong>
+          스타트업 대표 · 41세 · Deep 멤버
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">BLANK</div>
+    <p>blankspace.kr &nbsp;·&nbsp; 2034 Seoul, Korea</p>
+    <p style="font-size:12px">© 2034 BLANK. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
