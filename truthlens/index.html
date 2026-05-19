@@ -2163,5 +2163,41 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
+
+<!-- 체험 네비게이션 버튼 -->
+<style>
+  #sim-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 9999;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding: 16px 24px 24px;
+    background: linear-gradient(to top, rgba(4,6,10,0.95) 60%, transparent);
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+  }
+  .sim-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: 980px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+  .sim-nav-btn:hover { opacity: 0.85; transform: scale(1.02); }
+  .sim-nav-btn.s1 { background: #fff; color: #1d1d1f; }
+  .sim-nav-btn.s4 { background: #1d1d1f; color: #fff; border: 1px solid #3a3a3a; }
+</style>
+<div id="sim-nav">
+  <a href="/blank" class="sim-nav-btn s1">S1 침묵의 거울 체험하기 →</a>
+  <a href="/mask" class="sim-nav-btn s4">S4 불완전한 감시 체험하기 →</a>
+</div>
 </body>
 </html>

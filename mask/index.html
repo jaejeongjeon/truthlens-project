@@ -1,801 +1,532 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MASK — 당신의 점수를 설계하세요</title>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0D0F0E;
-      --surface: #141614;
-      --surface2: #1A1C1A;
-      --border: #252825;
-      --text: #E8EAE7;
-      --muted: #5A5E59;
-      --lime: #A8FF6B;
-      --lime-dim: rgba(168,255,107,0.12);
-      --lime-border: rgba(168,255,107,0.25);
-      --red: #FF4B4B;
-      --radius: 12px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Syne', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 48px;
-      background: rgba(13,15,14,0.9);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 6px;
-      color: var(--lime);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: color 0.15s;
-    }
-
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      background: var(--lime) !important;
-      color: var(--bg) !important;
-      padding: 8px 18px;
-      border-radius: 6px;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 24px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(168,255,107,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--lime);
-      margin-bottom: 32px;
-      border: 1px solid var(--lime-border);
-      padding: 6px 16px;
-      border-radius: 4px;
-      background: var(--lime-dim);
-    }
-
-    .hero-before-after {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      justify-content: center;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-
-    .score-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .score-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .score-before {
-      font-family: 'Space Mono', monospace;
-      font-size: 80px;
-      font-weight: 700;
-      color: var(--red);
-      line-height: 1;
-    }
-
-    .score-after {
-      font-family: 'Space Mono', monospace;
-      font-size: 80px;
-      font-weight: 700;
-      color: var(--lime);
-      line-height: 1;
-    }
-
-    .score-arrow {
-      font-size: 40px;
-      color: var(--muted);
-    }
-
-    .hero-title {
-      font-size: clamp(36px, 6vw, 72px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1px;
-      margin-bottom: 20px;
-    }
-
-    .hero-title .highlight {
-      color: var(--lime);
-    }
-
-    .hero-desc {
-      max-width: 500px;
-      font-size: 16px;
-      color: var(--muted);
-      margin-bottom: 40px;
-      line-height: 1.75;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .btn-lime {
-      background: var(--lime);
-      color: var(--bg);
-      padding: 14px 32px;
-      border-radius: 8px;
-      border: none;
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: opacity 0.15s;
-    }
-
-    .btn-lime:hover { opacity: 0.85; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text);
-      padding: 14px 32px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: border-color 0.15s;
-    }
-
-    .btn-ghost:hover { border-color: var(--muted); }
-
-    /* ── SECTION COMMON ── */
-    section {
-      padding: 100px 24px;
-    }
-
-    .section-inner {
-      max-width: 920px;
-      margin: 0 auto;
-    }
-
-    .section-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--lime);
-      margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.5px;
-      margin-bottom: 16px;
-    }
-
-    .section-desc {
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 560px;
-      line-height: 1.75;
-      margin-bottom: 56px;
-    }
-
-    /* ── STATS ── */
-    .stats-band {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 60px 24px;
-    }
-
-    .stats-inner {
-      max-width: 920px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-    }
-
-    .stat-item {
-      text-align: center;
-      padding: 0 24px;
-      border-right: 1px solid var(--border);
-    }
-
-    .stat-item:last-child { border-right: none; }
-
-    .stat-value {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(36px, 5vw, 56px);
-      font-weight: 700;
-      color: var(--lime);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    /* ── TRAINING ── */
-    .training-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .training-step {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 24px;
-      align-items: start;
-      transition: border-color 0.15s;
-    }
-
-    .training-step:hover { border-color: var(--lime-border); }
-
-    .step-num-box {
-      width: 64px;
-      height: 64px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Space Mono', monospace;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--lime);
-      background: var(--lime-dim);
-      flex-shrink: 0;
-    }
-
-    .step-content h3 {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .step-content p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .step-content .step-detail {
-      margin-top: 12px;
-      padding: 12px 16px;
-      background: var(--surface2);
-      border-radius: 8px;
-      border-left: 2px solid var(--lime);
-      font-family: 'Space Mono', monospace;
-      font-size: 12px;
-      color: var(--lime);
-      letter-spacing: 0.5px;
-    }
-
-    /* ── PLANS ── */
-    .plans-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-    }
-
-    .plan-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.15s;
-    }
-
-    .plan-card:hover { border-color: var(--muted); }
-
-    .plan-card.featured {
-      border-color: var(--lime);
-      background: var(--surface2);
-    }
-
-    .plan-badge {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 2px;
-      padding: 4px 10px;
-      border-radius: 4px;
-      background: var(--lime-dim);
-      color: var(--lime);
-      border: 1px solid var(--lime-border);
-      margin-bottom: 16px;
-      align-self: flex-start;
-    }
-
-    .plan-name {
-      font-family: 'Space Mono', monospace;
-      font-size: 14px;
-      letter-spacing: 4px;
-      color: var(--muted);
-      margin-bottom: 12px;
-      text-transform: uppercase;
-    }
-
-    .plan-price {
-      font-family: 'Space Mono', monospace;
-      font-size: 36px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 4px;
-      line-height: 1;
-    }
-
-    .plan-period {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-
-    .plan-features {
-      list-style: none;
-      flex: 1;
-      margin-bottom: 24px;
-    }
-
-    .plan-features li {
-      font-size: 14px;
-      color: var(--muted);
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .plan-features li::before {
-      content: '>';
-      font-family: 'Space Mono', monospace;
-      color: var(--lime);
-      font-size: 11px;
-      flex-shrink: 0;
-    }
-
-    .plan-btn {
-      display: block;
-      text-align: center;
-      padding: 12px;
-      border-radius: 8px;
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      color: var(--text);
-      background: transparent;
-      transition: all 0.15s;
-    }
-
-    .plan-btn:hover { border-color: var(--muted); }
-
-    .plan-card.featured .plan-btn {
-      background: var(--lime);
-      color: var(--bg);
-      border-color: var(--lime);
-    }
-
-    .plan-card.featured .plan-btn:hover { opacity: 0.85; }
-
-    /* ── TESTIMONIALS ── */
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .testimonial {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px;
-    }
-
-    .testimonial .score-change {
-      font-family: 'Space Mono', monospace;
-      font-size: 13px;
-      color: var(--lime);
-      margin-bottom: 14px;
-    }
-
-    .testimonial blockquote {
-      font-size: 15px;
-      line-height: 1.65;
-      color: var(--text);
-      margin-bottom: 20px;
-    }
-
-    .testimonial-author {
-      font-size: 13px;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-    }
-
-    /* ── LEGAL NOTICE ── */
-    .legal-band {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 40px 24px;
-    }
-
-    .legal-inner {
-      max-width: 920px;
-      margin: 0 auto;
-    }
-
-    .legal-inner h4 {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .legal-inner p {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 800px;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 24px;
-    }
-
-    footer .footer-inner {
-      max-width: 920px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    footer .footer-logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 6px;
-      color: var(--lime);
-    }
-
-    footer p {
-      font-size: 12px;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
-
-    @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      section { padding: 70px 20px; }
-      .stats-inner { grid-template-columns: 1fr; gap: 32px; }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 28px; }
-      .stat-item:last-child { border-bottom: none; }
-      .training-step { grid-template-columns: 1fr; }
-      .hero-before-after { gap: 16px; }
-      .score-before, .score-after { font-size: 56px; }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>MASK — 당신의 진심은 훈련으로 완성됩니다</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net"/>
+<link rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;
+  --surface:#111;
+  --surface2:#1d1d1f;
+  --border:#2a2a2a;
+  --text:#f5f5f7;
+  --muted:#86868b;
+  --blue:#2997ff;
+  --blue-dim:rgba(41,151,255,.12);
+  --blue-border:rgba(41,151,255,.3);
+  --red:#ff453a;
+  --radius:18px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard','Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,.85);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border);padding:0 24px}
+.nav-inner{max-width:1080px;margin:0 auto;height:52px;display:flex;align-items:center;gap:32px}
+.nav-logo{font-size:19px;font-weight:700;letter-spacing:-0.5px;text-decoration:none;color:var(--text);flex-shrink:0}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;gap:24px;list-style:none;flex:1}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--blue);color:#fff;padding:7px 16px;border-radius:980px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:opacity .15s;flex-shrink:0}
+.nav-cta:hover{opacity:.85}
+
+/* ── SECTIONS ── */
+section{padding:96px 24px}
+.inner{max-width:1080px;margin:0 auto}
+.eyebrow{font-size:13px;font-weight:600;color:var(--blue);letter-spacing:.5px;margin-bottom:12px}
+h1{font-size:clamp(36px,5.5vw,64px);font-weight:700;line-height:1.08;letter-spacing:-1.5px;margin-bottom:20px;color:var(--text)}
+h2{font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.1;letter-spacing:-1px;margin-bottom:16px;color:var(--text)}
+h3{font-size:20px;font-weight:600;margin-bottom:8px;color:var(--text)}
+
+/* ── HERO ── */
+.hero{padding:80px 24px 60px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.live-badge{display:inline-flex;align-items:center;gap:8px;background:var(--blue-dim);border:1px solid var(--blue-border);border-radius:980px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--blue);margin-bottom:20px}
+.live-dot{width:8px;height:8px;background:var(--blue);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-desc{font-size:19px;color:var(--muted);line-height:1.6;margin-bottom:24px;max-width:480px}
+.score-demo{background:var(--surface2);border-radius:14px;padding:20px 28px;display:inline-flex;align-items:center;gap:20px;margin-bottom:32px}
+.score-box{text-align:center}
+.score-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;color:var(--muted)}
+.score-val{font-size:48px;font-weight:700;line-height:1;letter-spacing:-1px}
+.score-before{color:var(--red)}
+.score-after{color:var(--blue)}
+.score-arrow{font-size:24px;color:var(--muted)}
+.hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn-blue{background:var(--blue);color:#fff;padding:14px 24px;border-radius:980px;border:none;font-family:inherit;font-size:17px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity .15s}
+.btn-blue:hover{opacity:.85}
+.btn-link{color:var(--text);font-size:17px;font-weight:500;text-decoration:none;transition:opacity .15s}
+.btn-link:hover{opacity:.6}
+.hero-sim{width:100%;height:300px;border-radius:20px;border:1px solid var(--border);overflow:hidden;background:#04060a}
+
+/* ── STATS ── */
+.stats-sect{padding:48px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.stat-item{padding:32px 40px;border-right:1px solid var(--border);text-align:center}
+.stat-item:last-child{border-right:none}
+.stat-val{font-size:clamp(36px,5vw,56px);font-weight:700;letter-spacing:-1px;margin-bottom:6px;color:var(--blue)}
+.stat-label{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+.stat-sub{font-size:13px;color:var(--muted)}
+
+/* ── ABOUT ── */
+.about-sect{background:var(--bg)}
+.about-grid{display:grid;grid-template-columns:200px 1fr;gap:80px;align-items:start}
+.about-label-col{font-size:13px;font-weight:600;color:var(--blue);letter-spacing:.5px;padding-top:6px}
+.about-body p{font-size:17px;color:var(--muted);line-height:1.75;margin-bottom:20px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:980px;padding:6px 16px;font-size:13px;font-weight:500;color:var(--text)}
+
+/* ── HOW IT WORKS ── */
+.how-sect{background:#111;padding:96px 24px}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.how-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:32px}
+.how-step{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:2px;margin-bottom:14px}
+.how-title{font-size:19px;font-weight:600;color:var(--text);margin-bottom:10px}
+.how-desc{font-size:14px;color:var(--muted);line-height:1.65}
+
+/* ── PLANS ── */
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.plan-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column}
+.plan-card.featured{border-color:var(--blue);background:var(--surface2)}
+.plan-name{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.plan-price{font-size:42px;font-weight:700;letter-spacing:-1px;margin-bottom:4px;line-height:1;color:var(--text)}
+.plan-period{font-size:14px;color:var(--muted);margin-bottom:28px}
+.plan-feats{list-style:none;flex:1;margin-bottom:28px}
+.plan-feats li{font-size:14px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.plan-feats li::before{content:'›';color:var(--blue);font-size:14px;font-weight:700;flex-shrink:0}
+.plan-btn{display:block;text-align:center;padding:13px;border-radius:980px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;border:1.5px solid var(--border);color:var(--text);background:transparent;transition:all .15s}
+.plan-btn:hover{border-color:var(--muted)}
+.plan-card.featured .plan-btn{background:var(--blue);color:#fff;border-color:var(--blue)}
+.plan-card.featured .plan-btn:hover{opacity:.85}
+
+/* ── LEGAL ── */
+.legal-sect{padding:48px 24px;background:var(--bg)}
+.legal-box{max-width:1080px;margin:0 auto;border:1px solid var(--red);border-radius:var(--radius);padding:28px 32px}
+.legal-title{font-size:13px;font-weight:700;color:var(--red);letter-spacing:1px;margin-bottom:12px;text-transform:uppercase}
+.legal-box p{font-size:13px;color:var(--muted);line-height:1.8}
+
+/* ── BOARD ── */
+.board-sect{background:var(--surface);padding:96px 24px}
+.board-header{text-align:center;margin-bottom:48px}
+.board-header h2{margin-bottom:12px}
+.board-sub{font-size:17px;color:var(--muted)}
+.board-stats{display:flex;justify-content:center;gap:48px;margin:28px 0 40px;flex-wrap:wrap}
+.bstat{text-align:center}
+.bstat-val{font-size:28px;font-weight:700;letter-spacing:-0.5px;color:var(--blue)}
+.bstat-label{font-size:13px;color:var(--muted);margin-top:2px}
+.live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:28px;font-weight:700;color:var(--blue)}
+
+/* Write bar */
+.write-bar{background:#fff;border-radius:980px;padding:12px 16px 12px 20px;display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.write-badge{background:#1a1040;color:#b09fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:980px;letter-spacing:.5px;flex-shrink:0}
+.write-input{flex:1;border:none;outline:none;font-family:inherit;font-size:15px;background:transparent;color:#1d1d1f}
+.write-input::placeholder{color:#86868b}
+.write-submit{background:var(--blue);color:#fff;border:none;border-radius:980px;padding:8px 18px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;flex-shrink:0;transition:opacity .15s}
+.write-submit:hover{opacity:.85}
+
+/* Carousel */
+.carousel-wrap{position:relative}
+.carousel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;min-height:200px}
+.post-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:14px}
+.post-top{display:flex;align-items:center;gap:10px}
+.post-badge{background:#1a1040;color:#b09fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:980px;letter-spacing:.5px}
+.post-time{font-size:12px;color:var(--muted);margin-left:auto}
+.post-body{font-size:15px;line-height:1.65;color:var(--text);flex:1;word-break:break-word;white-space:pre-wrap}
+.emoji-row{display:flex;gap:6px;flex-wrap:wrap}
+.emoji-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:980px;padding:5px 12px;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:inherit;transition:all .15s;color:var(--text)}
+.emoji-btn:hover{border-color:var(--blue)}
+.emoji-btn.active{background:var(--blue-dim);border-color:var(--blue);color:var(--blue)}
+.emoji-count{font-size:12px;font-weight:600}
+.comment-wrap{margin-top:4px}
+.comment-toggle{background:none;border:none;font-family:inherit;font-size:13px;color:var(--muted);cursor:pointer;padding:0;margin-bottom:8px}
+.comment-toggle:hover{color:var(--text)}
+.comment-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.comment-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--text)}
+.comment-meta{font-size:11px;color:var(--muted);margin-bottom:2px}
+.comment-form{background:#fff;border-radius:980px;display:flex;align-items:center;padding:7px 7px 7px 14px;gap:8px;width:100%}
+.comment-input{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:13px;color:#1d1d1f;width:100%}
+.comment-input::placeholder{color:#86868b}
+.comment-submit{background:var(--blue);color:#fff;border:none;border-radius:980px;padding:6px 14px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0}
+
+/* Carousel nav */
+.carousel-nav{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:24px}
+.carousel-btn{background:var(--surface);border:1.5px solid var(--border);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--text)}
+.carousel-btn:hover{border-color:var(--blue);color:var(--blue)}
+.carousel-btn:disabled{opacity:.3;cursor:not-allowed}
+.dots{display:flex;gap:6px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:background .15s}
+.dot.active{background:var(--blue)}
+.empty-state{text-align:center;padding:48px;color:var(--muted);grid-column:1/-1}
+
+/* ── FOOTER ── */
+footer{background:var(--surface2);border-top:1px solid var(--border);padding:32px 24px}
+.footer-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-logo{font-size:18px;font-weight:700;color:var(--text)}
+.footer-logo span{color:var(--blue)}
+footer p{font-size:13px;color:var(--muted)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-sim{height:240px}
+  .stats-grid{grid-template-columns:1fr}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border);padding:24px}
+  .about-grid{grid-template-columns:1fr;gap:24px}
+  .how-grid{grid-template-columns:1fr}
+  .plans-grid{grid-template-columns:1fr}
+  .carousel-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .board-stats{gap:20px}
+}
+</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">MASK</div>
-  <ul class="nav-links">
-    <li><a href="#training">훈련</a></li>
-    <li><a href="#stats">성과</a></li>
-    <li><a href="#plans">플랜</a></li>
-    <li><a href="#plans" class="nav-cta">시작하기</a></li>
-  </ul>
+  <div class="nav-inner">
+    <a href="/mask" class="nav-logo">MASK<span>_</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">회사 소개</a></li>
+      <li><a href="#how">훈련 방식</a></li>
+      <li><a href="#plans">플랜</a></li>
+      <li><a href="#board">커뮤니티</a></li>
+    </ul>
+    <a href="#plans" class="nav-cta">무료 진단 받기</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-tag">maskyourscore.kr &nbsp;·&nbsp; 2034 Seoul</div>
-
-  <div class="hero-before-after">
-    <div class="score-box">
-      <div class="score-label" style="color:var(--red)">BEFORE</div>
-      <div class="score-before">34</div>
+  <div class="inner hero-grid">
+    <div>
+      <div class="live-badge"><span class="live-dot"></span>월 구독자 47만 명 돌파</div>
+      <h1>당신의 진심은<br>훈련으로 완성됩니다</h1>
+      <p class="hero-desc">AI는 완벽하지 않습니다. 그 오판 패턴을 분석하고, 당신에게 유리하게 재설계합니다.</p>
+      <div class="score-demo">
+        <div class="score-box">
+          <div class="score-label">Before</div>
+          <div class="score-val score-before">34</div>
+        </div>
+        <div class="score-arrow">→</div>
+        <div class="score-box">
+          <div class="score-label">After</div>
+          <div class="score-val score-after">91</div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="#plans" class="btn-blue">무료 점수 진단 받기</a>
+        <a href="#how" class="btn-link">훈련 방식 보기 →</a>
+      </div>
     </div>
-    <div class="score-arrow">→</div>
-    <div class="score-box">
-      <div class="score-label" style="color:var(--lime)">AFTER</div>
-      <div class="score-after">91</div>
+    <div>
+      <iframe class="hero-sim" src="/truthlens" title="TruthLens 시뮬레이터" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
     </div>
-  </div>
-
-  <h1 class="hero-title">
-    AI가 오판하는 <span class="highlight">방식</span>을<br>
-    당신의 무기로 만드세요
-  </h1>
-  <p class="hero-desc">
-    2034년 AI 정확도는 70%. 30%의 오판이 존재합니다.
-    MASK는 그 오판 패턴을 역분석해, 당신의 신뢰 지수를 전략적으로 끌어올립니다.
-  </p>
-  <div class="hero-actions">
-    <a href="#plans" class="btn-lime">내 점수 설계 시작</a>
-    <a href="#training" class="btn-ghost">훈련 방식 보기</a>
   </div>
 </section>
 
 <!-- STATS -->
-<div class="stats-band" id="stats">
-  <div class="stats-inner">
-    <div class="stat-item">
-      <div class="stat-value">+47pt</div>
-      <div class="stat-label">평균 점수 상승폭</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">94%</div>
-      <div class="stat-label">목표 점수 달성률</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-value">470K</div>
-      <div class="stat-label">누적 코칭 완료 세션</div>
+<div class="stats-sect">
+  <div class="inner">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-val">+47pt</div>
+        <div class="stat-label">3개월 평균 신뢰 점수 상승폭</div>
+        <div class="stat-sub">Coach 이상 플랜 기준</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">94%</div>
+        <div class="stat-label">채용 면접 통과율</div>
+        <div class="stat-sub">Elite 코스 수료 후</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val">470K</div>
+        <div class="stat-label">월 구독자</div>
+        <div class="stat-sub">감정 세탁 산업 1조 돌파</div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- TRAINING -->
-<section id="training">
-  <div class="section-inner">
-    <div class="section-tag">훈련 프로토콜</div>
-    <h2 class="section-title">3단계 역분석 시스템</h2>
-    <p class="section-desc">
-      AI의 오판은 무작위가 아닙니다. 패턴이 있고, 역이용할 수 있습니다.
-    </p>
-    <div class="training-steps">
-      <div class="training-step">
-        <div class="step-num-box">01</div>
-        <div class="step-content">
-          <h3>행동 데이터 수집</h3>
-          <p>
-            14일간 일상 행동 패턴을 수집합니다. 표정, 보행 패턴, 구매 이력, 대화 리듬 —
-            AI가 실제로 분석하는 240개 변수를 추적합니다.
-          </p>
-          <div class="step-detail">// 수집 변수: 240개 &nbsp;|&nbsp; 분석 주기: 실시간</div>
-        </div>
-      </div>
-      <div class="training-step">
-        <div class="step-num-box">02</div>
-        <div class="step-content">
-          <h3>오판 역분석</h3>
-          <p>
-            수집된 데이터에서 AI가 높은 신뢰 점수를 부여하는 행동 클러스터를 식별합니다.
-            어떤 패턴이 AI를 "긍정 편향"으로 이끄는지 수치로 분석합니다.
-          </p>
-          <div class="step-detail">// 오판 패턴 DB: 2.3M 샘플 &nbsp;|&nbsp; 정확도: 89%</div>
-        </div>
-      </div>
-      <div class="training-step">
-        <div class="step-num-box">03</div>
-        <div class="step-content">
-          <h3>행동 재프로그래밍</h3>
-          <p>
-            맞춤 훈련 루틴을 제공합니다. 걷는 방식, 대화 템포, 결제 패턴까지 —
-            AI가 "신뢰 가능"으로 판단하는 시그널을 자연스럽게 체화합니다.
-          </p>
-          <div class="step-detail">// 평균 훈련 기간: 21일 &nbsp;|&nbsp; 상승폭: +47pt</div>
+<!-- ABOUT -->
+<section id="about" class="about-sect">
+  <div class="inner">
+    <div class="about-grid">
+      <div class="about-label-col">회사 소개</div>
+      <div class="about-body">
+        <h2>불완전한 AI,<br>완벽하게 역이용하다</h2>
+        <p>TruthLens의 정확도는 70%입니다. 나머지 30%는 오판입니다. MASK는 그 오판 패턴을 3년간 수집·분석해, 개인 맞춤형 신뢰 점수 최적화 훈련 시스템을 개발했습니다.</p>
+        <p>우리는 당신이 거짓말을 하도록 훈련하지 않습니다. AI가 "신뢰 가능"으로 판단하는 패턴을 자연스럽게 체화하도록 돕습니다. 결과는 숫자로 증명됩니다.</p>
+        <div class="tags">
+          <span class="tag">오판 역분석 특허 보유</span>
+          <span class="tag">행동 재프로그래밍</span>
+          <span class="tag">실시간 점수 시뮬레이터</span>
+          <span class="tag">개인정보 완전 암호화</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="divider">
+<!-- HOW IT WORKS -->
+<section class="how-sect" id="how">
+  <div class="inner">
+    <div class="eyebrow">훈련 방식</div>
+    <h2>'속이기'가 아닌<br>'최적화'하기</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-step">STEP_01</div>
+        <div class="how-title">행동 데이터 수집</div>
+        <p class="how-desc">14일간 240개 변수를 추적합니다. 표정, 보행 패턴, 구매 이력, 대화 리듬 — AI가 실제로 분석하는 신호를 수집합니다.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-step">STEP_02</div>
+        <div class="how-title">오판 패턴 역분석</div>
+        <p class="how-desc">230만 개 샘플 DB에서 AI가 "긍정 편향"을 일으키는 행동 클러스터를 식별합니다. 어떤 패턴이 점수를 올리는지 수치로 분석합니다.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-step">STEP_03</div>
+        <div class="how-title">행동 재프로그래밍</div>
+        <p class="how-desc">맞춤 훈련 루틴을 제공합니다. 걷는 방식, 대화 템포, 결제 패턴까지 — AI 신뢰 신호를 21일 만에 자연스럽게 체화합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- PLANS -->
-<section id="plans">
-  <div class="section-inner">
-    <div class="section-tag">플랜 선택</div>
-    <h2 class="section-title">목표 점수에 맞는<br>플랜을 고르세요</h2>
-    <p class="section-desc">모든 플랜은 데이터 암호화 및 익명 처리가 보장됩니다.</p>
+<section id="plans" style="background:var(--bg)">
+  <div class="inner">
+    <div class="eyebrow">플랜 선택</div>
+    <h2>목표 점수에 맞는<br>플랜을 고르세요</h2>
     <div class="plans-grid">
       <div class="plan-card">
         <div class="plan-name">Basic</div>
         <div class="plan-price">₩39,000</div>
         <div class="plan-period">/ 월</div>
-        <ul class="plan-features">
-          <li>행동 수집 기본 (80개 변수)</li>
-          <li>오판 패턴 리포트 월 2회</li>
+        <ul class="plan-feats">
+          <li>표정 기준선 분석</li>
+          <li>주 2회 피드백 리포트</li>
           <li>기본 훈련 루틴 제공</li>
           <li>커뮤니티 포럼 접근</li>
         </ul>
-        <a href="#" class="plan-btn">Basic 시작하기</a>
+        <a href="#" class="plan-btn">시작하기</a>
       </div>
       <div class="plan-card featured">
-        <div class="plan-badge">MOST POPULAR</div>
         <div class="plan-name">Coach</div>
         <div class="plan-price">₩79,000</div>
         <div class="plan-period">/ 월</div>
-        <ul class="plan-features">
-          <li>행동 수집 전체 (240개 변수)</li>
-          <li>실시간 오판 역분석</li>
-          <li>맞춤 훈련 루틴 매주 업데이트</li>
-          <li>1:1 코치 세션 월 2회</li>
-          <li>점수 예측 시뮬레이터</li>
+        <ul class="plan-feats">
+          <li>실시간 점수 시뮬레이터</li>
+          <li>음성·시선 교정 훈련</li>
+          <li>주 5회 피드백</li>
+          <li>오판 패턴 리포트</li>
+          <li>1:1 코치 월 2회</li>
         </ul>
-        <a href="#" class="plan-btn">Coach 시작하기</a>
+        <a href="#" class="plan-btn">시작하기</a>
       </div>
       <div class="plan-card">
         <div class="plan-name">Elite</div>
         <div class="plan-price">₩149,000</div>
         <div class="plan-period">/ 월</div>
-        <ul class="plan-features">
-          <li>Coach 플랜 전체 포함</li>
-          <li>전담 AI 코치 배정</li>
-          <li>긴급 점수 부스트 프로토콜</li>
-          <li>취업·입시·대출 특화 모드</li>
-          <li>결과 보장 (미달성 시 환불)</li>
+        <ul class="plan-feats">
+          <li>전담 1:1 코치 배정</li>
+          <li>긴급 점수 복구 프로토콜</li>
+          <li>면접·심사 집중 훈련</li>
+          <li>무제한 시뮬레이터</li>
+          <li>결과 보장 (미달성 환불)</li>
         </ul>
-        <a href="#" class="plan-btn">Elite 시작하기</a>
+        <a href="#" class="plan-btn">시작하기</a>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="divider">
-
-<!-- TESTIMONIALS -->
-<section id="voices">
-  <div class="section-inner">
-    <div class="section-tag">사용자 후기</div>
-    <h2 class="section-title">숫자가<br>말해줍니다</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial">
-        <div class="score-change">34 → 91 (+57pt)</div>
-        <blockquote>
-          "대출 심사에서 두 번 떨어졌습니다. MASK 21일 프로그램 후 세 번째 신청에서 승인받았어요. 점수가 오른 게 아니라 AI가 보는 나를 바꾼 겁니다."
-        </blockquote>
-        <div class="testimonial-author">// 최 ○○ · 38세 · Coach 플랜</div>
-      </div>
-      <div class="testimonial">
-        <div class="score-change">52 → 88 (+36pt)</div>
-        <blockquote>
-          "취업 면접 전에 Elite 프로그램을 3주 했습니다. AI 면접관 점수가 면접마다 달랐는데, 이제 일관되게 높게 나옵니다."
-        </blockquote>
-        <div class="testimonial-author">// 정 ○○ · 26세 · Elite 플랜</div>
-      </div>
-      <div class="testimonial">
-        <div class="score-change">61 → 94 (+33pt)</div>
-        <blockquote>
-          "처음엔 죄책감이 들었어요. 근데 생각해보면 이력서 잘 쓰는 것과 다를 게 없잖아요. AI도 결국 패턴을 보는 거니까."
-        </blockquote>
-        <div class="testimonial-author">// 윤 ○○ · 31세 · Coach 플랜</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LEGAL NOTICE -->
-<div class="legal-band">
-  <div class="legal-inner">
-    <h4>법적 고지</h4>
-    <p>
-      MASK가 제공하는 서비스는 개인의 행동 패턴을 분석하고 개선하는 코칭 프로그램입니다.
-      MASK는 AI 신뢰 지수 시스템을 직접 조작하거나 데이터를 변조하지 않으며, 어떠한 형태의 불법적 해킹이나 시스템 접근도 포함하지 않습니다.
-      본 서비스는 공개된 AI 행동 분석 연구를 기반으로 합법적인 행동 코칭을 제공합니다.
-      점수 결과는 개인차에 따라 다를 수 있으며, 보장 조건은 Elite 플랜 약관을 참조하십시오.
-      본 서비스 이용에 따른 사회적·법적 책임은 이용자에게 있습니다.
-      © 2034 MASK Inc. — maskyourscore.kr — 사업자등록번호: 234-88-XXXXX
-    </p>
+<!-- LEGAL -->
+<div class="legal-sect">
+  <div class="legal-box">
+    <div class="legal-title">⚠ 법적 고지</div>
+    <p>MASK는 개인의 자연스러운 커뮤니케이션 능력을 향상시키는 코칭 서비스입니다. 본 서비스는 TruthLens AI 시스템을 직접 조작하거나 데이터를 변조하지 않으며, 어떠한 형태의 불법적 해킹 또는 시스템 접근도 포함하지 않습니다. 공개된 AI 행동 분석 연구를 기반으로 합법적인 행동 코칭을 제공합니다. 점수 결과는 개인차에 따라 다를 수 있으며, 보장 조건은 Elite 플랜 약관을 참조하십시오. 본 서비스 이용에 따른 사회적·법적 책임은 이용자에게 있습니다. © 2034 MASK Inc. — maskyourscore.kr</p>
   </div>
 </div>
+
+<!-- S4 BOARD -->
+<section class="board-sect" id="board">
+  <div class="inner">
+    <div class="board-header">
+      <div class="eyebrow" style="margin-bottom:8px">S4 · 불완전한 감시</div>
+      <h2>이 세계, 어떻게 보셨나요?</h2>
+      <p class="board-sub">익명으로 의견을 남기고, 다른 사람의 생각에 반응해보세요</p>
+      <div class="board-stats">
+        <div class="bstat"><div class="bstat-val" id="stat-posts">—</div><div class="bstat-label">게시글</div></div>
+        <div class="bstat"><div class="bstat-val" id="stat-comments">—</div><div class="bstat-label">댓글</div></div>
+        <div class="bstat"><div class="bstat-val" id="stat-emojis">—</div><div class="bstat-label">이모지 반응</div></div>
+        <div class="bstat"><div class="live-indicator"><span class="live-dot" style="background:var(--blue)"></span>실시간</div><div class="bstat-label">15초 자동 갱신</div></div>
+      </div>
+    </div>
+
+    <div class="write-bar">
+      <span class="write-badge">S4</span>
+      <input class="write-input" id="write-input" type="text" placeholder="AI 점수 시스템이 지배하는 세계를 산다면..."/>
+      <button class="write-submit" onclick="submitPost()">게시</button>
+    </div>
+
+    <div class="carousel-wrap">
+      <div class="carousel-grid" id="carousel-grid"></div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="btn-prev" onclick="prevPage()">‹</button>
+        <div class="dots" id="dots"></div>
+        <button class="carousel-btn" id="btn-next" onclick="nextPage()">›</button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo">MASK</div>
-    <p>maskyourscore.kr &nbsp;·&nbsp; 2034 Seoul</p>
-    <p>© 2034 MASK Inc. All rights reserved.</p>
+    <span class="footer-logo">MASK<span>_</span></span>
+    <p>maskyourscore.kr · 2034, Seoul</p>
+    <p>© 2034 MASK Inc.</p>
   </div>
 </footer>
 
+<script>
+const SB_URL = 'https://icyvlepypojvfkxxdprd.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImljeXZsZXB5cG9qdmZreHhkcHJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwODYxMzgsImV4cCI6MjA5NDY2MjEzOH0.vnmIgsnb3eO1Yf0r7-YHHGhyV6Fec-uD43Guit4ReBM';
+const SCENARIO = 'S4';
+const EMOJIS = ['😮','🤔','👍'];
+const PER_PAGE = 3;
+
+let posts=[], comments=[], reactions=[];
+let page=0, openComments=new Set();
+
+const headers = { 'apikey': SB_KEY, 'Authorization': 'Bearer '+SB_KEY, 'Content-Type': 'application/json' };
+
+async function get(path){ const r=await fetch(SB_URL+path,{headers}); return r.json(); }
+async function post(path,body){ return fetch(SB_URL+path,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify(body)}); }
+
+function timeAgo(d){
+  const s=(Date.now()-new Date(d).getTime())/1000;
+  if(s<60)return '방금 전';
+  if(s<3600)return Math.floor(s/60)+'분 전';
+  if(s<86400)return Math.floor(s/3600)+'시간 전';
+  return Math.floor(s/86400)+'일 전';
+}
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function fetchAll(){
+  const [p,c,r]=await Promise.all([
+    get('/rest/v1/posts?scenario=eq.'+SCENARIO+'&order=created_at.desc&limit=100'),
+    get('/rest/v1/comments?order=created_at.asc&limit=500'),
+    get('/rest/v1/reactions?limit=1000')
+  ]);
+  posts=Array.isArray(p)?p:[];
+  comments=Array.isArray(c)?c:[];
+  reactions=Array.isArray(r)?r:[];
+  updateStats();
+  renderCarousel();
+}
+
+function updateStats(){
+  const rc=reactions.filter(r=>posts.some(p=>p.id===r.post_id));
+  document.getElementById('stat-posts').textContent=posts.length;
+  document.getElementById('stat-comments').textContent=comments.filter(c=>posts.some(p=>p.id===c.post_id)).length;
+  document.getElementById('stat-emojis').textContent=rc.length;
+}
+
+function renderCarousel(){
+  const grid=document.getElementById('carousel-grid');
+  const total=Math.max(1,Math.ceil(posts.length/PER_PAGE));
+  if(page>=total)page=total-1;
+  const slice=posts.slice(page*PER_PAGE,page*PER_PAGE+PER_PAGE);
+
+  if(posts.length===0){
+    grid.innerHTML='<div class="empty-state"><div style="font-size:32px">📭</div><p style="margin-top:8px">첫 번째 의견을 남겨보세요.</p></div>';
+  } else {
+    grid.innerHTML=slice.map(p=>renderCard(p)).join('');
+  }
+
+  const dotsEl=document.getElementById('dots');
+  dotsEl.innerHTML=Array.from({length:total},(_,i)=>`<div class="dot${i===page?' active':''}"></div>`).join('');
+  document.getElementById('btn-prev').disabled=page===0;
+  document.getElementById('btn-next').disabled=page>=total-1;
+}
+
+function renderCard(p){
+  const pc=comments.filter(c=>c.post_id===p.id);
+  const pr=reactions.filter(r=>r.post_id===p.id);
+  const rm={};
+  pr.forEach(r=>rm[r.emoji]=(rm[r.emoji]||0)+1);
+  const show=openComments.has(p.id);
+  return `<div class="post-card">
+    <div class="post-top">
+      <span class="post-badge">S4</span>
+      <span class="post-time">${timeAgo(p.created_at)}</span>
+    </div>
+    <div class="post-body">${esc(p.content)}</div>
+    <div class="emoji-row">
+      ${EMOJIS.map(e=>`<button class="emoji-btn" onclick="addReaction('${p.id}','${e}')">
+        ${e}<span class="emoji-count">${rm[e]||0}</span>
+      </button>`).join('')}
+    </div>
+    <div class="comment-wrap">
+      <button class="comment-toggle" onclick="toggleComment('${p.id}')">
+        ${show?'▲ 접기':'▼ 댓글 '+pc.length+'개'}
+      </button>
+      ${show?`<div class="comment-list">
+        ${pc.length===0?'<p style="font-size:13px;color:var(--muted);margin-bottom:6px">아직 댓글이 없습니다.</p>':''}
+        ${pc.map(c=>`<div class="comment-item"><div class="comment-meta">익명 · ${timeAgo(c.created_at)}</div>${esc(c.content)}</div>`).join('')}
+      </div>
+      <div class="comment-form">
+        <input class="comment-input" id="ci-${p.id}" placeholder="댓글 달기..." onkeydown="if(event.key==='Enter')addComment('${p.id}')"/>
+        <button class="comment-submit" onclick="addComment('${p.id}')">달기</button>
+      </div>`:''}
+    </div>
+  </div>`;
+}
+
+function toggleComment(id){
+  openComments.has(id)?openComments.delete(id):openComments.add(id);
+  renderCarousel();
+}
+
+function prevPage(){ if(page>0){page--;renderCarousel();} }
+function nextPage(){ const t=Math.ceil(posts.length/PER_PAGE); if(page<t-1){page++;renderCarousel();} }
+
+async function submitPost(){
+  const inp=document.getElementById('write-input');
+  const content=inp.value.trim();
+  if(!content)return;
+  inp.value='';
+  await post('/rest/v1/posts',{scenario:SCENARIO,content});
+  await fetchAll();
+  page=0;
+}
+
+async function addReaction(postId,emoji){
+  await post('/rest/v1/reactions',{post_id:postId,emoji});
+  await fetchAll();
+}
+
+async function addComment(postId){
+  const inp=document.getElementById('ci-'+postId);
+  if(!inp)return;
+  const content=inp.value.trim();
+  if(!content)return;
+  inp.value='';
+  await post('/rest/v1/comments',{post_id:postId,content});
+  await fetchAll();
+}
+
+fetchAll();
+setInterval(fetchAll,15000);
+</script>
 </body>
 </html>
