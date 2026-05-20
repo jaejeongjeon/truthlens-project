@@ -4,498 +4,502 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>BLANK — 점수 없이 마주 앉는 공간</title>
-<link rel="preconnect" href="https://cdn.jsdelivr.net"/>
-<link rel="stylesheet" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#fff;
-  --surface:#f5f5f7;
-  --border:#d2d2d7;
-  --text:#1d1d1f;
-  --muted:#6e6e73;
-  --accent:#1d1d1f;
-  --blue:#0071e3;
-  --radius:18px;
+  --bg:#fff;--sf:#f5f5f7;--bd:#f0f0f0;--bd2:#d2d2d7;--bd3:#e5e5e5;
+  --tx:#1d1d1f;--mu:#6e6e73;--hi:#86868b;--ac:#000;--tag:#e8e8ed;
 }
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Pretendard','Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--tx);font-family:'Pretendard','Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6}
+iframe{display:block}
 
-/* ── NAV ── */
-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border);padding:0 24px}
-.nav-inner{max-width:1080px;margin:0 auto;height:52px;display:flex;align-items:center;gap:32px}
-.nav-logo{font-size:19px;font-weight:700;letter-spacing:-0.5px;text-decoration:none;color:var(--text);flex-shrink:0}
-.nav-links{display:flex;gap:24px;list-style:none;flex:1}
-.nav-links a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;transition:color .15s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{background:var(--accent);color:#fff;padding:7px 16px;border-radius:980px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:opacity .15s;flex-shrink:0}
-.nav-cta:hover{opacity:.85}
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.88);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--bd);padding:0 48px}
+.ni{max-width:1080px;margin:0 auto;height:52px;display:flex;align-items:center;gap:32px}
+.nl{font-size:17px;font-weight:700;text-decoration:none;color:var(--tx);flex-shrink:0}
+.nm{display:flex;gap:24px;list-style:none;flex:1}
+.nm a{text-decoration:none;color:var(--mu);font-size:13px;font-weight:500;transition:color .15s}
+.nm a:hover{color:var(--tx)}
+.nc{background:var(--tx);color:#fff;padding:8px 18px;border-radius:980px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:opacity .15s}
+.nc:hover{opacity:.85}
 
-/* ── SECTIONS ── */
-section{padding:96px 24px}
-.inner{max-width:1080px;margin:0 auto}
-.eyebrow{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.5px;margin-bottom:12px}
-h1{font-size:clamp(36px,5.5vw,64px);font-weight:700;line-height:1.08;letter-spacing:-1.5px;margin-bottom:20px}
-h2{font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.1;letter-spacing:-1px;margin-bottom:16px}
-h3{font-size:20px;font-weight:600;margin-bottom:8px}
+/* HERO */
+.hero{padding:72px 48px 56px;text-align:center}
+.ey{font-size:13px;color:var(--mu);font-weight:500;margin-bottom:20px}
+.hero h1{font-size:60px;font-weight:700;letter-spacing:-0.04em;line-height:1.07;margin-bottom:20px}
+.hero h1 em{color:var(--mu);font-style:normal}
+.hero p{font-size:17px;color:var(--mu);max-width:480px;margin:0 auto 36px;line-height:1.65}
+.ha{display:flex;justify-content:center;gap:16px;align-items:center;flex-wrap:wrap}
+.bd{background:#000;color:#fff;padding:13px 28px;border-radius:980px;border:none;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity .15s}
+.bd:hover{opacity:.85}
+.bl{color:var(--tx);font-size:16px;font-weight:500;text-decoration:none;transition:opacity .15s}
+.bl:hover{opacity:.6}
 
-/* ── HERO ── */
-.hero{padding:80px 24px 60px}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.hero-desc{font-size:19px;color:var(--muted);line-height:1.6;margin-bottom:32px;max-width:480px}
-.hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.btn-dark{background:var(--accent);color:#fff;padding:14px 24px;border-radius:980px;border:none;font-family:inherit;font-size:17px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity .15s}
-.btn-dark:hover{opacity:.85}
-.btn-link{color:var(--accent);font-size:17px;font-weight:500;text-decoration:none;transition:opacity .15s}
-.btn-link:hover{opacity:.7}
-.hero-sim{width:100%;height:300px;border-radius:20px;border:none;overflow:hidden;background:#04060a;box-shadow:0 20px 60px rgba(0,0,0,.12)}
+/* SIMULATOR */
+.sim{padding:0 48px 80px}
+.sim-in{max-width:1080px;margin:0 auto}
+.sim-lb{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--hi);margin-bottom:14px}
+.sim-if{width:100%;aspect-ratio:16/9;border-radius:24px;border:none;background:#04060a}
+.sim-tx{padding-top:28px;max-width:640px}
+.sim-tt{font-size:19px;font-weight:700;margin-bottom:10px;color:var(--tx)}
+.sim-ds{font-size:14px;color:var(--mu);line-height:1.7;margin-bottom:16px}
+.sim-hs{display:flex;gap:20px;flex-wrap:wrap}
+.sim-h{font-size:13px;color:var(--hi)}
 
-/* ── STATS ── */
-.stats-sect{padding:48px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr)}
-.stat-item{padding:32px 40px;border-right:1px solid var(--border);text-align:center}
-.stat-item:last-child{border-right:none}
-.stat-val{font-size:clamp(36px,5vw,56px);font-weight:700;letter-spacing:-1px;margin-bottom:6px}
-.stat-label{font-size:15px;font-weight:600;margin-bottom:4px}
-.stat-sub{font-size:13px;color:var(--muted)}
+/* STATS */
+.st{border-top:.5px solid var(--bd);border-bottom:.5px solid var(--bd);padding:48px}
+.st-in{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+.sv{padding:24px 32px;border-right:.5px solid var(--bd);text-align:center}
+.sv:last-child{border-right:none}
+.sn{font-size:40px;font-weight:700;letter-spacing:-1px;margin-bottom:8px}
+.sl{font-size:14px;font-weight:600;margin-bottom:4px}
+.sd{font-size:13px;color:var(--mu)}
 
-/* ── ABOUT ── */
-.about-grid{display:grid;grid-template-columns:200px 1fr;gap:80px;align-items:start}
-.about-label{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.5px;padding-top:6px}
-.about-body p{font-size:17px;color:var(--muted);line-height:1.75;margin-bottom:20px}
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
-.tag{background:var(--surface);border:1px solid var(--border);border-radius:980px;padding:6px 16px;font-size:13px;font-weight:500;color:var(--text)}
+/* ABOUT */
+.ab{padding:80px 48px;border-bottom:.5px solid var(--bd)}
+.ab-in{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.ab-ey{font-size:13px;color:var(--mu);font-weight:600;margin-bottom:12px}
+.ab-h2{font-size:36px;font-weight:700;letter-spacing:-0.03em;line-height:1.15;margin-bottom:20px}
+.ab-bd p{font-size:15px;color:var(--mu);line-height:1.75;margin-bottom:16px}
+.tg-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.tg{border:.5px solid var(--bd2);color:var(--mu);padding:7px 16px;border-radius:980px;font-size:13px;font-weight:500}
+.ab-rt{background:var(--sf);border-radius:20px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ab-card{background:#fff;border-radius:12px;padding:20px}
+.ab-cn{font-size:11px;color:var(--hi);font-weight:600;margin-bottom:8px;letter-spacing:.5px}
+.ab-ct{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:6px}
+.ab-cd{font-size:12px;color:var(--hi);line-height:1.6}
 
-/* ── HOW IT WORKS ── */
-.how-sect{background:var(--surface);padding:96px 24px}
-.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:48px}
-.how-card{background:#fff;padding:32px 24px}
-.how-num{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:1px;margin-bottom:16px}
-.how-title{font-size:17px;font-weight:600;margin-bottom:10px}
-.how-desc{font-size:14px;color:var(--muted);line-height:1.65}
+/* HOW */
+.hw{padding:80px 48px;background:var(--sf);border-bottom:.5px solid var(--bd)}
+.hw-in{max-width:1080px;margin:0 auto}
+.hw-ey{font-size:13px;color:var(--mu);font-weight:600;margin-bottom:12px}
+.hw-h2{font-size:36px;font-weight:700;letter-spacing:-0.03em;line-height:1.15;margin-bottom:48px}
+.hw-gr{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#e5e5e5}
+.hw-c{background:var(--sf);padding:32px 24px}
+.hw-n{font-size:11px;color:var(--hi);font-weight:600;letter-spacing:.5px;margin-bottom:14px}
+.hw-t{font-size:15px;font-weight:600;color:var(--tx);margin-bottom:8px}
+.hw-d{font-size:13px;color:var(--mu);line-height:1.65}
 
-/* ── MEMBERSHIP ── */
-.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
-.plan-card{border:1px solid var(--border);border-radius:var(--radius);padding:32px;display:flex;flex-direction:column}
-.plan-card.featured{background:var(--accent);color:#fff;border-color:var(--accent)}
-.plan-name{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.plan-card.featured .plan-name{color:rgba(255,255,255,.6)}
-.plan-price{font-size:42px;font-weight:700;letter-spacing:-1px;margin-bottom:4px;line-height:1}
-.plan-period{font-size:14px;color:var(--muted);margin-bottom:28px}
-.plan-card.featured .plan-period{color:rgba(255,255,255,.6)}
-.plan-feats{list-style:none;flex:1;margin-bottom:28px}
-.plan-feats li{font-size:14px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.plan-card.featured .plan-feats li{color:rgba(255,255,255,.75);border-bottom-color:rgba(255,255,255,.12)}
-.plan-feats li::before{content:'—';color:var(--border);font-size:12px;flex-shrink:0}
-.plan-card.featured .plan-feats li::before{color:rgba(255,255,255,.3)}
-.plan-btn{display:block;text-align:center;padding:13px;border-radius:980px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;text-decoration:none;border:1.5px solid var(--border);color:var(--text);background:transparent;transition:all .15s}
-.plan-btn:hover{background:var(--surface)}
-.plan-card.featured .plan-btn{background:#fff;color:var(--text);border-color:#fff}
-.plan-card.featured .plan-btn:hover{opacity:.9}
+/* PLANS */
+.pl{padding:80px 48px;border-bottom:.5px solid var(--bd)}
+.pl-in{max-width:1080px;margin:0 auto}
+.pl-ey{font-size:13px;color:var(--mu);font-weight:600;margin-bottom:12px}
+.pl-h2{font-size:36px;font-weight:700;letter-spacing:-0.03em;line-height:1.15;margin-bottom:48px}
+.pl-gr{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:#f0f0f0}
+.pc{background:#fff;padding:40px 32px;display:flex;flex-direction:column}
+.pc.ft{background:var(--ac);color:var(--sf)}
+.pn{font-size:22px;font-weight:700;margin-bottom:6px}
+.ptg{font-size:14px;color:var(--mu);margin-bottom:24px}
+.pc.ft .ptg{color:rgba(245,245,247,.6)}
+.pp{font-size:52px;font-weight:700;letter-spacing:-2px;line-height:1;margin-bottom:4px}
+.ppr{font-size:14px;color:var(--mu);margin-bottom:28px}
+.pc.ft .ppr{color:rgba(245,245,247,.6)}
+.pf{list-style:none;flex:1;margin-bottom:28px;display:flex;flex-direction:column;gap:10px}
+.pf li{font-size:14px;color:var(--mu);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.pc.ft .pf li{color:rgba(245,245,247,.75)}
+.pf li::before{content:'—';opacity:.5;flex-shrink:0}
+.pb{display:block;text-align:center;padding:13px;border-radius:980px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s}
+.pb.lt{border:.5px solid var(--bd2);color:var(--tx)}
+.pb.lt:hover{background:var(--sf)}
+.pb.dk{background:var(--sf);color:var(--ac);border:none}
+.pb.dk:hover{opacity:.9}
 
-/* ── BOARD ── */
-.board-sect{background:var(--surface);padding:96px 24px}
-.board-header{text-align:center;margin-bottom:48px}
-.board-header h2{margin-bottom:12px}
-.board-sub{font-size:17px;color:var(--muted)}
-.board-stats{display:flex;justify-content:center;gap:48px;margin:28px 0 40px}
-.bstat{text-align:center}
-.bstat-val{font-size:28px;font-weight:700;letter-spacing:-0.5px}
-.bstat-label{font-size:13px;color:var(--muted);margin-top:2px}
-.live-dot{display:inline-block;width:8px;height:8px;background:#34c759;border-radius:50%;animation:pulse 2s infinite;margin-right:4px}
+/* BOARD */
+.bo{padding:80px 48px;background:var(--sf)}
+.bo-in{max-width:1080px;margin:0 auto}
+.bo-ey{font-size:13px;color:var(--mu);font-weight:600;margin-bottom:12px}
+.bo-h2{font-size:36px;font-weight:700;letter-spacing:-0.03em;margin-bottom:8px}
+.bo-sb{font-size:16px;color:var(--mu);margin-bottom:32px}
+.bs-gr{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.bs-c{background:#fff;border-radius:12px;padding:20px;text-align:center}
+.bs-v{font-size:28px;font-weight:700;color:var(--tx);margin-bottom:4px;line-height:1.2}
+.bs-l{font-size:12px;color:var(--hi)}
+.ldot{display:inline-block;width:7px;height:7px;background:#34c759;border-radius:50%;animation:pulse 2s infinite;margin-right:3px;vertical-align:middle}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.wb{background:#fff;border-radius:980px;padding:14px 20px;display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.wb-bg{background:var(--tag);color:var(--mu);border-radius:980px;font-size:11px;font-weight:700;padding:4px 10px;flex-shrink:0;letter-spacing:.5px}
+.wb-in{flex:1;border:none;outline:none;font-family:inherit;font-size:15px;background:transparent;color:var(--tx)}
+.wb-in::placeholder{color:var(--hi)}
+.wb-bt{background:none;border:none;font-family:inherit;font-size:15px;font-weight:700;color:var(--tx);cursor:pointer;padding:0 4px;flex-shrink:0}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.ch-t{font-size:13px;color:var(--mu);font-weight:500}
+.ch-nb{display:flex;gap:6px}
+.nb{background:#fff;border:.5px solid var(--bd2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.nb:hover{background:var(--sf)}
+.nb:disabled{opacity:.3;cursor:not-allowed}
+.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:180px}
+.pcard{background:#fff;border-radius:18px;padding:22px;border:.5px solid var(--bd3);display:flex;flex-direction:column;gap:12px}
+.pt{display:flex;align-items:center;gap:8px}
+.pbg{background:var(--tag);color:var(--mu);font-size:10px;font-weight:700;padding:3px 9px;border-radius:980px;letter-spacing:.5px}
+.ptm{font-size:11px;color:var(--hi);margin-left:auto}
+.pbd{font-size:14px;color:var(--tx);line-height:1.65;word-break:break-word;white-space:pre-wrap;flex:1}
+.pdv{height:.5px;background:var(--bd)}
+.er{display:flex;gap:6px;flex-wrap:wrap}
+.eb{background:#fff;border:1.5px solid var(--bd2);border-radius:980px;padding:8px 16px;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit;transition:all .15s;color:var(--tx);line-height:1}
+.eb span{font-size:12px;font-weight:600}
+.eb:hover{background:var(--sf);border-color:#aaa}
+.eb.ac{background:var(--ac);border-color:var(--ac);color:#fff}
+.cbr{background:var(--sf);border-radius:980px;display:flex;align-items:center;padding:8px 8px 8px 14px;gap:8px;width:100%}
+.ci{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:13px;color:var(--tx)}
+.ci::placeholder{color:var(--hi)}
+.cs{background:none;border:none;font-family:inherit;font-size:13px;font-weight:600;color:var(--tx);cursor:pointer;padding:0 6px;flex-shrink:0}
+.ctg{background:none;border:none;font-family:inherit;font-size:12px;color:var(--mu);cursor:pointer;padding:0;text-align:left}
+.ctg:hover{color:var(--tx)}
+.cl{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.cit{background:var(--sf);border-radius:10px;padding:8px 12px}
+.cim{font-size:10px;color:var(--hi);margin-bottom:3px}
+.cib{font-size:12px;color:var(--tx)}
+.emp{grid-column:1/-1;text-align:center;padding:48px;color:var(--mu);font-size:14px}
+.dr{display:flex;justify-content:center;gap:6px;margin-top:20px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--bd2);cursor:pointer;transition:background .15s;border:none;padding:0}
+.dot.on{background:var(--tx)}
 
-/* Write bar */
-.write-bar{background:#fff;border-radius:980px;padding:12px 16px 12px 20px;display:flex;align-items:center;gap:12px;margin-bottom:32px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.write-badge{background:#1d1d1f;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:980px;letter-spacing:.5px;flex-shrink:0}
-.write-input{flex:1;border:none;outline:none;font-family:inherit;font-size:15px;background:transparent;color:var(--text)}
-.write-input::placeholder{color:var(--muted)}
-.write-submit{background:var(--accent);color:#fff;border:none;border-radius:980px;padding:8px 18px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;flex-shrink:0;transition:opacity .15s}
-.write-submit:hover{opacity:.85}
+/* FOOTER */
+footer{padding:40px 48px;border-top:.5px solid var(--bd)}
+.fi{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.fl{display:flex;flex-direction:column;gap:4px}
+.flo{font-size:16px;font-weight:700;color:var(--tx)}
+.fu{font-size:12px;color:var(--mu)}
+.fr{font-size:12px;color:var(--mu)}
 
-/* Carousel */
-.carousel-wrap{position:relative}
-.carousel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;min-height:200px}
-.post-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:14px}
-.post-top{display:flex;align-items:center;gap:10px}
-.post-badge{background:#1d1d1f;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:980px;letter-spacing:.5px}
-.post-time{font-size:12px;color:var(--muted);margin-left:auto}
-.post-body{font-size:15px;line-height:1.65;color:var(--text);flex:1;word-break:break-word;white-space:pre-wrap}
-.emoji-row{display:flex;gap:6px;flex-wrap:wrap}
-.emoji-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:980px;padding:5px 12px;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:inherit;transition:all .15s}
-.emoji-btn:hover{background:var(--border)}
-.emoji-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.emoji-count{font-size:12px;font-weight:600}
-.comment-wrap{margin-top:4px}
-.comment-toggle{background:none;border:none;font-family:inherit;font-size:13px;color:var(--muted);cursor:pointer;padding:0;margin-bottom:8px}
-.comment-toggle:hover{color:var(--text)}
-.comment-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
-.comment-item{background:var(--surface);border-radius:10px;padding:8px 12px;font-size:13px}
-.comment-meta{font-size:11px;color:var(--muted);margin-bottom:2px}
-.comment-form{background:var(--surface);border-radius:980px;display:flex;align-items:center;padding:7px 7px 7px 14px;gap:8px}
-.comment-input{flex:1;border:none;outline:none;background:transparent;font-family:inherit;font-size:13px;color:var(--text)}
-.comment-input::placeholder{color:var(--muted)}
-.comment-submit{background:var(--accent);color:#fff;border:none;border-radius:980px;padding:6px 14px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0}
-
-/* Carousel nav */
-.carousel-nav{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:24px}
-.carousel-btn{background:#fff;border:1.5px solid var(--border);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.carousel-btn:hover{background:var(--surface)}
-.carousel-btn:disabled{opacity:.3;cursor:not-allowed}
-.dots{display:flex;gap:6px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:background .15s}
-.dot.active{background:var(--accent)}
-
-.empty-state{text-align:center;padding:48px;color:var(--muted);grid-column:1/-1}
-
-/* ── FOOTER ── */
-footer{background:var(--surface);border-top:1px solid var(--border);padding:32px 24px}
-.footer-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-logo{font-size:18px;font-weight:700}
-footer p{font-size:13px;color:var(--muted)}
-
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .hero-grid{grid-template-columns:1fr}
-  .hero-sim{height:240px}
-  .stats-grid{grid-template-columns:1fr}
-  .stat-item{border-right:none;border-bottom:1px solid var(--border);padding:24px}
-  .about-grid{grid-template-columns:1fr;gap:24px}
-  .how-grid{grid-template-columns:1fr 1fr}
-  .plans-grid{grid-template-columns:1fr}
-  .carousel-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
+/* RESPONSIVE */
+@media(max-width:960px){
+  .nm{display:none}
+  nav{padding:0 24px}
+  .hero{padding:56px 24px 40px}
+  .hero h1{font-size:40px}
+  .sim{padding:0 24px 60px}
+  .st{padding:40px 24px}
+  .st-in{grid-template-columns:1fr}
+  .sv{border-right:none;border-bottom:.5px solid var(--bd);padding:20px 0}
+  .sv:last-child{border-bottom:none}
+  .ab{padding:60px 24px}
+  .ab-in{grid-template-columns:1fr;gap:32px}
+  .hw{padding:60px 24px}
+  .hw-gr{grid-template-columns:repeat(2,1fr)}
+  .pl{padding:60px 24px}
+  .pl-gr{grid-template-columns:1fr}
+  .bo{padding:60px 24px}
+  .bs-gr{grid-template-columns:repeat(2,1fr)}
+  .cg{grid-template-columns:1fr}
+  footer{padding:32px 24px}
 }
-@media(max-width:600px){
-  .how-grid{grid-template-columns:1fr}
-  .board-stats{gap:24px;flex-wrap:wrap}
+@media(max-width:480px){
+  .hero h1{font-size:32px}
+  .ab-h2,.hw-h2,.pl-h2,.bo-h2{font-size:26px}
+  .hw-gr{grid-template-columns:1fr}
+  .sim-hs{flex-direction:column;gap:8px}
+  .ab-rt{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-inner">
-    <a href="/blank" class="nav-logo">BLANK</a>
-    <ul class="nav-links">
-      <li><a href="#about">서비스 소개</a></li>
-      <li><a href="#how">이용 방식</a></li>
-      <li><a href="#membership">멤버십</a></li>
-      <li><a href="#board">지점 안내</a></li>
+  <div class="ni">
+    <a href="/blank" class="nl">BLANK</a>
+    <ul class="nm">
+      <li><a href="#about">서비스소개</a></li>
+      <li><a href="#how">이용방식</a></li>
+      <li><a href="#plans">멤버십</a></li>
+      <li><a href="#board">지점안내</a></li>
     </ul>
-    <a href="#membership" class="nav-cta">멤버십 신청</a>
+    <a href="#plans" class="nc">멤버십 신청</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="inner hero-grid">
-    <div>
-      <div class="eyebrow">blankspace.kr · 2034, Seoul</div>
-      <h1>점수 없이<br>마주 앉는 공간</h1>
-      <p class="hero-desc">TruthLens가 완벽해질수록 사람들은 오히려 측정되지 않는 순간을 원한다.</p>
-      <div class="hero-actions">
-        <a href="#membership" class="btn-dark">멤버십 신청하기</a>
-        <a href="#how" class="btn-link">지점 둘러보기 →</a>
+  <div class="ey">blankspace.kr · 2034, Seoul</div>
+  <h1>점수 없이 <em>마주 앉는</em> 공간</h1>
+  <p>TruthLens가 완벽해질수록 사람들은 오히려 측정되지 않는 순간을 원한다.</p>
+  <div class="ha">
+    <a href="#plans" class="bd">멤버십 신청하기</a>
+    <a href="#how" class="bl">지점 둘러보기 →</a>
+  </div>
+</section>
+
+<!-- SIMULATOR -->
+<section class="sim">
+  <div class="sim-in">
+    <div class="sim-lb">TruthLens Simulator</div>
+    <iframe class="sim-if" src="/truthlens" allow="camera; microphone" allowfullscreen title="TruthLens Simulator"></iframe>
+    <div class="sim-tx">
+      <div class="sim-tt">AI가 당신을 어떻게 보는지 직접 체험해보세요</div>
+      <div class="sim-ds">TruthLens는 카메라를 통해 미세 표정·시선·동공·음성을 실시간으로 분석해 신뢰 점수 0–100을 산출합니다. 2034년 현재 채용·금융·보험에서 이 점수 제출이 사실상 강제화되어 있습니다. 카메라를 허용하고 손 제스처로 화면을 직접 조종해보세요.</div>
+      <div class="sim-hs">
+        <span class="sim-h">✋ 손 펼치기 — 분석 시작</span>
+        <span class="sim-h">👆 검지 — 뷰 전환</span>
+        <span class="sim-h">✌️ 두 손가락 — 확대</span>
+        <span class="sim-h">🤚 손 내리기 — 일시정지</span>
       </div>
-    </div>
-    <div>
-      <iframe class="hero-sim" src="/truthlens" title="TruthLens 시뮬레이터" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
     </div>
   </div>
 </section>
 
 <!-- STATS -->
-<div class="stats-sect">
-  <div class="inner">
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-val">14</div>
-        <div class="stat-label">서울 내 운영 지점</div>
-        <div class="stat-sub">강남 · 마포 · 홍대 · 성수 외</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-val">61%</div>
-        <div class="stat-label">TruthLens를 의도적으로 끈 경험</div>
-        <div class="stat-sub">20–30대 응답자 기준</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-val">2,300억</div>
-        <div class="stat-label">2034년 기업가치</div>
-        <div class="stat-sub">"기술 없음을 판다"</div>
-      </div>
+<div class="st">
+  <div class="st-in">
+    <div class="sv">
+      <div class="sn">14</div>
+      <div class="sl">서울 내 운영 지점</div>
+      <div class="sd">강남·마포·홍대·성수 외</div>
+    </div>
+    <div class="sv">
+      <div class="sn">61%</div>
+      <div class="sl">TruthLens를 의도적으로 끈 경험</div>
+      <div class="sd">20–30대 응답자 기준</div>
+    </div>
+    <div class="sv">
+      <div class="sn">2,300억</div>
+      <div class="sl">2034년 기업가치</div>
+      <div class="sd">"기술 없음을 판다"</div>
     </div>
   </div>
 </div>
 
 <!-- ABOUT -->
-<section id="about">
-  <div class="inner">
-    <div class="about-grid">
-      <div class="about-label">회사 소개</div>
-      <div class="about-body">
-        <h2>완벽한 AI가 오히려<br>신뢰를 파괴한다</h2>
-        <p>TruthLens 신뢰 지수 시스템이 상용화된 이후, 사람들은 대화할 때마다 점수를 의식하게 됐습니다. 표정을 관리하고, 단어를 고르고, 침묵조차 계산합니다. BLANK는 그 피로를 발견하고, AI 신호가 완전히 차단된 공간을 만들었습니다.</p>
-        <p>우리의 공간에서는 어떤 데이터도 수집되지 않습니다. 점수가 없으니 연기할 이유도 없습니다. 사람들은 여기서 비로소 진짜 대화를 합니다.</p>
-        <div class="tags">
-          <span class="tag">AI-free 인증 공간</span>
-          <span class="tag">Low-Signal Certified Zone</span>
-          <span class="tag">제3자 보증 인프라</span>
-        </div>
+<section class="ab" id="about">
+  <div class="ab-in">
+    <div>
+      <div class="ab-ey">회사 소개</div>
+      <h2 class="ab-h2">완벽한 AI가 오히려<br>신뢰를 파괴한다</h2>
+      <div class="ab-bd">
+        <p>2031년 TruthLens 출시 이후, 채용·금융·보험 전반에서 신뢰 점수 제출이 강제화되었습니다. AI가 정확할수록 사람들은 오히려 관계의 여백을 잃어가고 있습니다.</p>
+        <p>BLANK는 이 역설에서 태어났습니다. '끄기'가 아닌 '못 끄게' 하는 4단계 물리적 차단 시스템으로, 이 공간에서 TruthLens 작동 불가임을 제3자가 보증합니다.</p>
+      </div>
+      <div class="tg-row">
+        <span class="tg">AI-free 인증 공간</span>
+        <span class="tg">Low-Signal Certified Zone</span>
+        <span class="tg">제3자 보증 인프라</span>
+      </div>
+    </div>
+    <div class="ab-rt">
+      <div class="ab-card">
+        <div class="ab-cn">01</div>
+        <div class="ab-ct">AR 글래스 수거</div>
+        <div class="ab-cd">패브릭 케이스에 수거. 글래스 없이 작동 불가.</div>
+      </div>
+      <div class="ab-card">
+        <div class="ab-cn">02</div>
+        <div class="ab-ct">WiFi 강제 차단</div>
+        <div class="ab-cd">TruthLens 클라우드 통신 자동 차단.</div>
+      </div>
+      <div class="ab-card">
+        <div class="ab-cn">03</div>
+        <div class="ab-ct">저전파 인증 구역</div>
+        <div class="ab-cd">외부 전파 차폐 시공 완료.</div>
+      </div>
+      <div class="ab-card">
+        <div class="ab-cn">04</div>
+        <div class="ab-ct">BLANK 인증서</div>
+        <div class="ab-cd">제3자 공식 보증 인증서 발급.</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="how-sect" id="how">
-  <div class="inner">
-    <div class="eyebrow">이용 방식</div>
-    <h2>4단계 차단 시스템</h2>
-    <div class="how-grid">
-      <div class="how-card">
-        <div class="how-num">01</div>
-        <div class="how-title">AR 글래스 수거</div>
-        <p class="how-desc">입장 전 모든 AR 글래스와 스마트 웨어러블 기기를 실드 보관함에 보관합니다. 열쇠는 본인이 소지합니다.</p>
+<section class="hw" id="how">
+  <div class="hw-in">
+    <div class="hw-ey">작동 방식</div>
+    <h2 class="hw-h2">4단계 차단 시스템</h2>
+    <div class="hw-gr">
+      <div class="hw-c">
+        <div class="hw-n">01</div>
+        <div class="hw-t">AR 글래스 수거</div>
+        <p class="hw-d">입장 전 모든 AR 글래스와 스마트 웨어러블 기기를 실드 보관함에 보관합니다. 열쇠는 본인이 소지합니다.</p>
       </div>
-      <div class="how-card">
-        <div class="how-num">02</div>
-        <div class="how-title">WiFi 강제 차단</div>
-        <p class="how-desc">패러데이 케이지 구조로 모든 외부 무선 신호를 차단합니다. 실내 측정값은 실시간 게시됩니다.</p>
+      <div class="hw-c">
+        <div class="hw-n">02</div>
+        <div class="hw-t">WiFi 강제 차단</div>
+        <p class="hw-d">패러데이 케이지 구조로 모든 외부 무선 신호를 차단합니다. 실내 측정값은 실시간 게시됩니다.</p>
       </div>
-      <div class="how-card">
-        <div class="how-num">03</div>
-        <div class="how-title">저전파 인증 구역</div>
-        <p class="how-desc">공간 내 전자기장을 24시간 모니터링하여 기준치 이하 환경임을 인증합니다.</p>
+      <div class="hw-c">
+        <div class="hw-n">03</div>
+        <div class="hw-t">저전파 인증 구역</div>
+        <p class="hw-d">공간 내 전자기장을 24시간 모니터링하여 기준치 이하 환경임을 인증합니다.</p>
       </div>
-      <div class="how-card">
-        <div class="how-num">04</div>
-        <div class="how-title">BLANK 인증서 발급</div>
-        <p class="how-desc">오프라인 전용 앱으로 입장이 완료됩니다. 세션 기록은 로컬 기기에만 저장됩니다.</p>
+      <div class="hw-c">
+        <div class="hw-n">04</div>
+        <div class="hw-t">BLANK 인증서 발급</div>
+        <p class="hw-d">오프라인 전용 앱으로 입장이 완료됩니다. 세션 기록은 로컬 기기에만 저장됩니다.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- MEMBERSHIP -->
-<section id="membership">
-  <div class="inner">
-    <div class="eyebrow">멤버십</div>
-    <h2>당신에게 맞는<br>공백을 선택하세요</h2>
-    <div class="plans-grid">
-      <div class="plan-card">
-        <div class="plan-name">Basic</div>
-        <div class="plan-price">₩49,000</div>
-        <div class="plan-period">/ 월</div>
-        <ul class="plan-feats">
+<section class="pl" id="plans">
+  <div class="pl-in">
+    <div class="pl-ey">멤버십</div>
+    <h2 class="pl-h2">당신에게 맞는 침묵의 공간</h2>
+    <div class="pl-gr">
+      <div class="pc">
+        <div class="pn">Basic</div>
+        <div class="ptg">기본 차단 인증 서비스</div>
+        <div class="pp">₩49,000</div>
+        <div class="ppr">/ 월</div>
+        <ul class="pf">
           <li>월 4회 방문</li>
           <li>기본 지점 7개소 이용</li>
           <li>앱 차단 인증서 발급</li>
           <li>48시간 전 예약</li>
         </ul>
-        <a href="#" class="plan-btn">시작하기</a>
+        <a href="#" class="pb lt">시작하기</a>
       </div>
-      <div class="plan-card featured">
-        <div class="plan-name">Still</div>
-        <div class="plan-price">₩89,000</div>
-        <div class="plan-period">/ 월</div>
-        <ul class="plan-feats">
+      <div class="pc ft">
+        <div class="pn">Still</div>
+        <div class="ptg">프리미엄 공간 무제한 이용</div>
+        <div class="pp">₩89,000</div>
+        <div class="ppr">/ 월</div>
+        <ul class="pf">
           <li>무제한 방문</li>
           <li>프리미엄 지점 14개소</li>
           <li>즉시 예약 가능</li>
           <li>동반 1인 월 2회</li>
         </ul>
-        <a href="#" class="plan-btn">시작하기</a>
+        <a href="#" class="pb dk">시작하기</a>
       </div>
-      <div class="plan-card">
-        <div class="plan-name">Deep</div>
-        <div class="plan-price">₩149,000</div>
-        <div class="plan-period">/ 월</div>
-        <ul class="plan-feats">
+      <div class="pc">
+        <div class="pn">Deep</div>
+        <div class="ptg">프라이빗 라운지 전담 서비스</div>
+        <div class="pp">₩149,000</div>
+        <div class="ppr">/ 월</div>
+        <ul class="pf">
           <li>프라이빗 룸 전용 이용</li>
           <li>전담 매니저 배정</li>
           <li>동반 3인 무제한</li>
           <li>공증 인증서 발급</li>
         </ul>
-        <a href="#" class="plan-btn">시작하기</a>
+        <a href="#" class="pb lt">시작하기</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- S1 BOARD -->
-<section class="board-sect" id="board">
-  <div class="inner">
-    <div class="board-header">
-      <div class="eyebrow" style="margin-bottom:8px">S1 · 침묵의 거울</div>
-      <h2>이 세계, 어떻게 보셨나요?</h2>
-      <p class="board-sub">익명으로 의견을 남기고, 다른 사람의 생각에 반응해보세요</p>
-      <div class="board-stats">
-        <div class="bstat"><div class="bstat-val" id="stat-posts">—</div><div class="bstat-label">게시글</div></div>
-        <div class="bstat"><div class="bstat-val" id="stat-comments">—</div><div class="bstat-label">댓글</div></div>
-        <div class="bstat"><div class="bstat-val" id="stat-emojis">—</div><div class="bstat-label">이모지 반응</div></div>
-        <div class="bstat"><div class="bstat-val"><span class="live-dot"></span>실시간</div><div class="bstat-label">15초 자동 갱신</div></div>
+<section class="bo" id="board">
+  <div class="bo-in">
+    <div class="bo-ey">S1 — 침묵의 거울</div>
+    <h2 class="bo-h2">이 세계, 어떻게 보셨나요?</h2>
+    <p class="bo-sb">익명으로 의견을 남기고, 다른 사람의 생각에 반응해보세요</p>
+    <div class="bs-gr">
+      <div class="bs-c"><div class="bs-v" id="sp">—</div><div class="bs-l">게시글</div></div>
+      <div class="bs-c"><div class="bs-v" id="sc">—</div><div class="bs-l">댓글</div></div>
+      <div class="bs-c"><div class="bs-v" id="sr">—</div><div class="bs-l">이모지 반응</div></div>
+      <div class="bs-c"><div class="bs-v"><span class="ldot"></span>실시간</div><div class="bs-l">15초 자동 갱신</div></div>
+    </div>
+    <div class="wb">
+      <span class="wb-bg">S1</span>
+      <input class="wb-in" id="wi" type="text" placeholder="침묵의 거울 세계관에 대한 생각을 남겨주세요..." onkeydown="if(event.key==='Enter')sub()"/>
+      <button class="wb-bt" onclick="sub()">게시</button>
+    </div>
+    <div class="ch">
+      <span class="ch-t">최신 의견 · 15초마다 자동 갱신</span>
+      <div class="ch-nb">
+        <button class="nb" id="bp" onclick="prev()">‹</button>
+        <button class="nb" id="bn" onclick="next()">›</button>
       </div>
     </div>
-
-    <div class="write-bar">
-      <span class="write-badge">S1</span>
-      <input class="write-input" id="write-input" type="text" placeholder="AI가 없는 세계를 상상한다면..."/>
-      <button class="write-submit" onclick="submitPost()">게시</button>
-    </div>
-
-    <div class="carousel-wrap">
-      <div class="carousel-grid" id="carousel-grid"></div>
-      <div class="carousel-nav">
-        <button class="carousel-btn" id="btn-prev" onclick="prevPage()">‹</button>
-        <div class="dots" id="dots"></div>
-        <button class="carousel-btn" id="btn-next" onclick="nextPage()">›</button>
-      </div>
-    </div>
+    <div class="cg" id="cg"></div>
+    <div class="dr" id="dr"></div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <span class="footer-logo">BLANK</span>
-    <p>blankspace.kr · 2034, Seoul</p>
-    <p>© 2034 BLANK Corp.</p>
+  <div class="fi">
+    <div class="fl">
+      <span class="flo">BLANK</span>
+      <span class="fu">blankspace.kr · 2034, Seoul</span>
+    </div>
+    <span class="fr">© 2034 BLANK Corp.</span>
   </div>
 </footer>
 
 <script>
-const SB_URL = 'https://icyvlepypojvfkxxdprd.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImljeXZsZXB5cG9qdmZreHhkcHJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwODYxMzgsImV4cCI6MjA5NDY2MjEzOH0.vnmIgsnb3eO1Yf0r7-YHHGhyV6Fec-uD43Guit4ReBM';
-const SCENARIO = 'S1';
-const EMOJIS = ['😮','🤔','👍'];
-const PER_PAGE = 3;
+const SU='https://icyvlepypojvfkxxdprd.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImljeXZsZXB5cG9qdmZreHhkcHJkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwODYxMzgsImV4cCI6MjA5NDY2MjEzOH0.vnmIgsnb3eO1Yf0r7-YHHGhyV6Fec-uD43Guit4ReBM';
+const SC='S1';const EM=['😮','🤔','👍'];const PP=3;
+let posts=[],cmts=[],rxns=[],pg=0,open=new Set(),clicked=new Set();
+const H={'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json'};
+const g=p=>fetch(SU+p,{headers:H}).then(r=>r.json());
+const po=(p,b)=>fetch(SU+p,{method:'POST',headers:{...H,'Prefer':'return=representation'},body:JSON.stringify(b)});
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function ago(d){const s=(Date.now()-new Date(d))/1000;if(s<60)return'방금 전';if(s<3600)return~~(s/60)+'분 전';if(s<86400)return~~(s/3600)+'시간 전';return~~(s/86400)+'일 전';}
 
-let posts=[], comments=[], reactions=[];
-let page=0, openComments=new Set();
-
-const headers = { 'apikey': SB_KEY, 'Authorization': 'Bearer '+SB_KEY, 'Content-Type': 'application/json' };
-
-async function get(path){ const r=await fetch(SB_URL+path,{headers}); return r.json(); }
-async function post(path,body){ return fetch(SB_URL+path,{method:'POST',headers:{...headers,'Prefer':'return=representation'},body:JSON.stringify(body)}); }
-
-function timeAgo(d){
-  const s=(Date.now()-new Date(d).getTime())/1000;
-  if(s<60)return '방금 전';
-  if(s<3600)return Math.floor(s/60)+'분 전';
-  if(s<86400)return Math.floor(s/3600)+'시간 전';
-  return Math.floor(s/86400)+'일 전';
-}
-function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-async function fetchAll(){
-  const [p,c,r]=await Promise.all([
-    get('/rest/v1/posts?scenario=eq.'+SCENARIO+'&order=created_at.desc&limit=100'),
-    get('/rest/v1/comments?order=created_at.asc&limit=500'),
-    get('/rest/v1/reactions?limit=1000')
+async function fa(){
+  const[p,c,r]=await Promise.all([
+    g('/rest/v1/posts?scenario=eq.'+SC+'&order=created_at.desc&limit=200'),
+    g('/rest/v1/comments?order=created_at.asc&limit=1000'),
+    g('/rest/v1/reactions?limit=2000')
   ]);
-  posts=Array.isArray(p)?p:[];
-  comments=Array.isArray(c)?c:[];
-  reactions=Array.isArray(r)?r:[];
-  updateStats();
-  renderCarousel();
+  posts=Array.isArray(p)?p:[];cmts=Array.isArray(c)?c:[];rxns=Array.isArray(r)?r:[];
+  const ids=new Set(posts.map(x=>x.id));
+  document.getElementById('sp').textContent=posts.length;
+  document.getElementById('sc').textContent=cmts.filter(x=>ids.has(x.post_id)).length;
+  document.getElementById('sr').textContent=rxns.filter(x=>ids.has(x.post_id)).length;
+  rdr();
 }
 
-function updateStats(){
-  const rc=reactions.filter(r=>posts.some(p=>p.id===r.post_id));
-  document.getElementById('stat-posts').textContent=posts.length;
-  document.getElementById('stat-comments').textContent=comments.filter(c=>posts.some(p=>p.id===c.post_id)).length;
-  document.getElementById('stat-emojis').textContent=rc.length;
+function rdr(){
+  const tot=Math.max(1,Math.ceil(posts.length/PP));
+  if(pg>=tot)pg=Math.max(0,tot-1);
+  const sl=posts.slice(pg*PP,(pg+1)*PP);
+  const g2=document.getElementById('cg');
+  g2.innerHTML=posts.length===0?'<div class="emp">아직 게시글이 없습니다. 첫 번째 의견을 남겨보세요.</div>':sl.map(card).join('');
+  const dr=document.getElementById('dr');
+  dr.innerHTML=Array.from({length:tot},(_,i)=>`<button class="dot${i===pg?' on':''}" onclick="gp(${i})"></button>`).join('');
+  document.getElementById('bp').disabled=pg===0;
+  document.getElementById('bn').disabled=pg>=tot-1;
 }
 
-function renderCarousel(){
-  const grid=document.getElementById('carousel-grid');
-  const total=Math.max(1,Math.ceil(posts.length/PER_PAGE));
-  if(page>=total)page=total-1;
-  const slice=posts.slice(page*PER_PAGE,page*PER_PAGE+PER_PAGE);
-
-  if(posts.length===0){
-    grid.innerHTML='<div class="empty-state"><div style="font-size:32px">📭</div><p style="margin-top:8px">첫 번째 의견을 남겨보세요.</p></div>';
-  } else {
-    grid.innerHTML=slice.map(p=>renderCard(p)).join('');
-  }
-
-  // dots
-  const dotsEl=document.getElementById('dots');
-  dotsEl.innerHTML=Array.from({length:total},(_,i)=>`<div class="dot${i===page?' active':''}"></div>`).join('');
-  document.getElementById('btn-prev').disabled=page===0;
-  document.getElementById('btn-next').disabled=page>=total-1;
+function card(p){
+  const pc=cmts.filter(c=>c.post_id===p.id);
+  const pr=rxns.filter(r=>r.post_id===p.id);
+  const rm={};pr.forEach(r=>rm[r.emoji]=(rm[r.emoji]||0)+1);
+  const isOpen=open.has(p.id);
+  return`<div class="pcard">
+  <div class="pt"><span class="pbg">S1</span><span class="ptm">${ago(p.created_at)}</span></div>
+  <div class="pbd">${esc(p.content)}</div>
+  <div class="pdv"></div>
+  <div class="er">${EM.map(e=>{const k=p.id+'-'+e,a=clicked.has(k);return`<button class="eb${a?' ac':''}" onclick="rxn('${p.id}','${e}')">${e}<span>${rm[e]||0}</span></button>`;}).join('')}</div>
+  <div class="cbr"><input class="ci" id="ci-${p.id}" placeholder="댓글 달기..." onkeydown="if(event.key==='Enter')cmt('${p.id}')"/><button class="cs" onclick="cmt('${p.id}')">게시</button></div>
+  <button class="ctg" onclick="tog('${p.id}')">💬 댓글 ${pc.length}개 보기</button>
+  ${isOpen?`<div class="cl">${pc.length===0?'<div style="font-size:12px;color:var(--hi)">아직 댓글이 없습니다.</div>':''}${pc.map(c=>`<div class="cit"><div class="cim">${ago(c.created_at)}</div><div class="cib">${esc(c.content)}</div></div>`).join('')}</div>`:''}
+</div>`;
 }
 
-function renderCard(p){
-  const pc=comments.filter(c=>c.post_id===p.id);
-  const pr=reactions.filter(r=>r.post_id===p.id);
-  const rm={};
-  pr.forEach(r=>rm[r.emoji]=(rm[r.emoji]||0)+1);
-  const show=openComments.has(p.id);
-  return `<div class="post-card">
-    <div class="post-top">
-      <span class="post-badge">S1</span>
-      <span class="post-time">${timeAgo(p.created_at)}</span>
-    </div>
-    <div class="post-body">${esc(p.content)}</div>
-    <div class="emoji-row">
-      ${EMOJIS.map(e=>`<button class="emoji-btn" onclick="addReaction('${p.id}','${e}')">
-        ${e}<span class="emoji-count">${rm[e]||0}</span>
-      </button>`).join('')}
-    </div>
-    <div class="comment-wrap">
-      <button class="comment-toggle" onclick="toggleComment('${p.id}')">
-        ${show?'▲ 접기':'▼ 댓글 '+pc.length+'개'}
-      </button>
-      ${show?`<div class="comment-list">
-        ${pc.length===0?'<p style="font-size:13px;color:var(--muted);margin-bottom:6px">아직 댓글이 없습니다.</p>':''}
-        ${pc.map(c=>`<div class="comment-item"><div class="comment-meta">익명 · ${timeAgo(c.created_at)}</div>${esc(c.content)}</div>`).join('')}
-      </div>
-      <div class="comment-form">
-        <input class="comment-input" id="ci-${p.id}" placeholder="댓글 달기..." onkeydown="if(event.key==='Enter')addComment('${p.id}')"/>
-        <button class="comment-submit" onclick="addComment('${p.id}')">달기</button>
-      </div>`:''}
-    </div>
-  </div>`;
-}
+function tog(id){open.has(id)?open.delete(id):open.add(id);rdr();}
+function gp(n){pg=n;rdr();}
+function prev(){if(pg>0){pg--;rdr();}}
+function next(){const t=Math.ceil(posts.length/PP);if(pg<t-1){pg++;rdr();}}
 
-function toggleComment(id){
-  openComments.has(id)?openComments.delete(id):openComments.add(id);
-  renderCarousel();
-}
-
-function prevPage(){ if(page>0){page--;renderCarousel();} }
-function nextPage(){ const t=Math.ceil(posts.length/PER_PAGE); if(page<t-1){page++;renderCarousel();} }
-
-async function submitPost(){
-  const inp=document.getElementById('write-input');
-  const content=inp.value.trim();
-  if(!content)return;
+async function sub(){
+  const inp=document.getElementById('wi');
+  const v=inp.value.trim();if(!v)return;
   inp.value='';
-  await post('/rest/v1/posts',{scenario:SCENARIO,content});
-  await fetchAll();
-  page=0;
+  await po('/rest/v1/posts',{scenario:SC,content:v});
+  await fa();pg=0;
 }
 
-async function addReaction(postId,emoji){
-  await post('/rest/v1/reactions',{post_id:postId,emoji});
-  await fetchAll();
+async function rxn(pid,e){
+  const k=pid+'-'+e;clicked.add(k);
+  await po('/rest/v1/reactions',{post_id:pid,emoji:e});
+  await fa();
 }
 
-async function addComment(postId){
-  const inp=document.getElementById('ci-'+postId);
-  if(!inp)return;
-  const content=inp.value.trim();
-  if(!content)return;
-  inp.value='';
-  await post('/rest/v1/comments',{post_id:postId,content});
-  await fetchAll();
+async function cmt(pid){
+  const inp=document.getElementById('ci-'+pid);if(!inp)return;
+  const v=inp.value.trim();if(!v)return;
+  open.add(pid);
+  await po('/rest/v1/comments',{post_id:pid,content:v});
+  await fa();
 }
 
-fetchAll();
-setInterval(fetchAll,15000);
+fa();setInterval(fa,15000);
 </script>
 </body>
 </html>
