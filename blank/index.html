@@ -37,16 +37,16 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.88);backdrop-
 .bl{color:var(--tx);font-size:16px;font-weight:500;text-decoration:none;transition:opacity .15s}
 .bl:hover{opacity:.6}
 
-/* SIMULATOR */
+/* BRAND FILM */
 .sim{padding:0 48px 80px}
 .sim-in{max-width:1080px;margin:0 auto}
 .sim-lb{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--hi);margin-bottom:14px}
-.sim-if{width:100%;aspect-ratio:16/9;border-radius:24px;border:none;background:#04060a}
+.sim-vd{width:100%;aspect-ratio:16/9;border-radius:24px;display:block;object-fit:cover}
 .sim-tx{padding-top:28px;max-width:640px}
 .sim-tt{font-size:19px;font-weight:700;margin-bottom:10px;color:var(--tx)}
-.sim-ds{font-size:14px;color:var(--mu);line-height:1.7;margin-bottom:16px}
-.sim-hs{display:flex;gap:20px;flex-wrap:wrap}
-.sim-h{font-size:13px;color:var(--hi)}
+.sim-ds{font-size:14px;color:var(--mu);line-height:1.8;margin-bottom:16px}
+.sim-tags{display:flex;gap:8px;flex-wrap:wrap}
+.sim-tag{border:.5px solid #d2d2d7;color:var(--mu);padding:7px 16px;border-radius:980px;font-size:12px;font-weight:500}
 
 /* STATS */
 .st{border-top:.5px solid var(--bd);border-bottom:.5px solid var(--bd);padding:48px}
@@ -221,19 +221,18 @@ footer{padding:40px 48px;border-top:.5px solid var(--bd)}
   </div>
 </section>
 
-<!-- SIMULATOR -->
+<!-- BRAND FILM -->
 <section class="sim">
   <div class="sim-in">
-    <div class="sim-lb">TruthLens Simulator</div>
-    <iframe class="sim-if" src="/truthlens" allow="camera; microphone" allowfullscreen title="TruthLens Simulator"></iframe>
+    <div class="sim-lb">Brand Film</div>
+    <video class="sim-vd" src="/blank/blank_brand_film.mp4" autoplay muted loop playsinline></video>
     <div class="sim-tx">
-      <div class="sim-tt">AI가 당신을 어떻게 보는지 직접 체험해보세요</div>
-      <div class="sim-ds">TruthLens는 카메라를 통해 미세 표정·시선·동공·음성을 실시간으로 분석해 신뢰 점수 0–100을 산출합니다. 2034년 현재 채용·금융·보험에서 이 점수 제출이 사실상 강제화되어 있습니다. 카메라를 허용하고 손 제스처로 화면을 직접 조종해보세요.</div>
-      <div class="sim-hs">
-        <span class="sim-h">✋ 손 펼치기 — 분석 시작</span>
-        <span class="sim-h">👆 검지 — 뷰 전환</span>
-        <span class="sim-h">✌️ 두 손가락 — 확대</span>
-        <span class="sim-h">🤚 손 내리기 — 일시정지</span>
+      <div class="sim-tt">측정되지 않는 순간을 위한 공간</div>
+      <div class="sim-ds">TruthLens가 완벽해질수록 사람들은 오히려 점수 없는 순간을 원합니다. 채용·금융·보험 전반에서 신뢰 점수 제출이 강제화된 2034년, BLANK는 AI 없이 마주 앉을 수 있는 유일한 물리적 보증 공간입니다.</div>
+      <div class="sim-tags">
+        <span class="sim-tag">AI-free 인증 공간</span>
+        <span class="sim-tag">Low-Signal Certified Zone</span>
+        <span class="sim-tag">2034, Seoul</span>
       </div>
     </div>
   </div>
