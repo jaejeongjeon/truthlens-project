@@ -45,16 +45,16 @@ nav{position:sticky;top:0;z-index:200;background:rgba(0,0,0,.88);backdrop-filter
 .blt{color:var(--bl);font-size:16px;font-weight:500;text-decoration:none;transition:opacity .15s}
 .blt:hover{opacity:.7}
 
-/* SIMULATOR */
+/* BRAND FILM */
 .sim{padding:0 48px 80px}
 .sim-in{max-width:1080px;margin:0 auto}
 .sim-lb{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--mu);margin-bottom:14px}
-.sim-if{width:100%;aspect-ratio:16/9;border-radius:24px;border:none;background:#04060a}
+.sim-vd{width:100%;aspect-ratio:16/9;border-radius:24px;display:block;object-fit:cover}
 .sim-tx{padding-top:28px;max-width:640px}
 .sim-tt{font-size:19px;font-weight:700;color:var(--tx);margin-bottom:10px}
-.sim-ds{font-size:14px;color:var(--mu);line-height:1.7;margin-bottom:16px}
-.sim-hs{display:flex;gap:20px;flex-wrap:wrap}
-.sim-h{font-size:13px;color:var(--hi)}
+.sim-ds{font-size:14px;color:var(--mu);line-height:1.8;margin-bottom:16px}
+.sim-tags{display:flex;gap:8px;flex-wrap:wrap}
+.sim-tag{border:.5px solid #3a3a3c;color:var(--mu);padding:7px 16px;border-radius:980px;font-size:12px;font-weight:500}
 
 /* STATS */
 .st{border-top:.5px solid var(--bd);border-bottom:.5px solid var(--bd);padding:48px;background:var(--sf)}
@@ -245,19 +245,18 @@ footer{padding:40px 48px;border-top:.5px solid var(--bd)}
   </div>
 </section>
 
-<!-- SIMULATOR -->
+<!-- BRAND FILM -->
 <section class="sim">
   <div class="sim-in">
-    <div class="sim-lb">TruthLens Simulator</div>
-    <iframe class="sim-if" src="/truthlens" allow="camera; microphone" allowfullscreen title="TruthLens Simulator"></iframe>
+    <div class="sim-lb">Brand Film</div>
+    <video class="sim-vd" src="mask_brand_film.mp4" autoplay muted loop playsinline></video>
     <div class="sim-tx">
-      <div class="sim-tt">지금 당신의 점수는 몇 점입니까?</div>
-      <div class="sim-ds">TruthLens는 카메라를 통해 미세 표정·시선·동공·음성을 실시간 분석합니다. AI 오판율이 20–30%에 달하는 이 세계에서, 당신의 점수가 채용·대출·보험을 결정합니다. 직접 체험하고, MASK가 왜 필요한지 확인하세요.</div>
-      <div class="sim-hs">
-        <span class="sim-h">✋ 손 펼치기 — 분석 시작</span>
-        <span class="sim-h">👆 검지 — 뷰 전환</span>
-        <span class="sim-h">✌️ 두 손가락 — 확대</span>
-        <span class="sim-h">🤚 손 내리기 — 일시정지</span>
+      <div class="sim-tt">불완전한 AI가 만든 세계, MASK가 답한다</div>
+      <div class="sim-ds">AI 탐지 정확도 70%. 사회는 여전히 점수 제출을 강요합니다.<br>오판받은 사람들의 채용 탈락, 보험 거절, 승진 실패가<br>일상이 된 세계에서 MASK는 태어났습니다.<br>당신의 진심은 훈련으로 완성됩니다.</div>
+      <div class="sim-tags">
+        <span class="sim-tag">AI 오판 역이용</span>
+        <span class="sim-tag">점수 최적화 코칭</span>
+        <span class="sim-tag">2034, Seoul</span>
       </div>
     </div>
   </div>
