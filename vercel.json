@@ -6,6 +6,7 @@
     {"source": "/truthlens", "destination": "/truthlens/index.html"},
     {"source": "/blank", "destination": "/blank/index.html"},
     {"source": "/mask", "destination": "/mask/index.html"},
-    {"source": "/board", "destination": "/board/index.html"}
+    {"source": "/board", "destination": "/board/index.html"},
+    {"source": "/news", "destination": "/news/index.html"}
   ]
 }
