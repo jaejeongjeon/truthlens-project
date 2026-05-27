@@ -413,9 +413,9 @@ footer{padding:40px 48px;border-top:.5px solid var(--bd)}
 <!-- S4 BOARD -->
 <section class="bo" id="board">
   <div class="bo-in">
-    <div class="bo-ey">S4 — 불완전한 감시</div>
-    <h2 class="bo-h2">이 세계, 어떻게 보셨나요?</h2>
-    <p class="bo-sb">익명으로 의견을 남기고, 다른 사람의 생각에 반응해보세요</p>
+    <div class="bo-ey">MASK 서비스 피드백</div>
+    <h2 class="bo-h2">MASK를 경험하셨나요?</h2>
+    <p class="bo-sb">서비스에 대한 솔직한 피드백을 남겨주세요. 익명으로 게시됩니다.</p>
     <div class="bs-gr">
       <div class="bs-c"><div class="bs-v" id="sp">—</div><div class="bs-l">게시글</div></div>
       <div class="bs-c"><div class="bs-v" id="sc">—</div><div class="bs-l">댓글</div></div>
@@ -423,8 +423,8 @@ footer{padding:40px 48px;border-top:.5px solid var(--bd)}
       <div class="bs-c"><div class="bs-v"><span class="ldot"></span>실시간</div><div class="bs-l">15초 자동 갱신</div></div>
     </div>
     <div class="wb">
-      <span class="wb-bg">S4</span>
-      <input class="wb-in" id="wi" type="text" placeholder="AI 점수 시스템이 지배하는 세계를 산다면..." onkeydown="if(event.key==='Enter')sub()"/>
+      <span class="wb-bg">MASK</span>
+      <input class="wb-in" id="wi" type="text" placeholder="MASK 서비스에 대한 생각을 자유롭게 남겨주세요..." onkeydown="if(event.key==='Enter')sub()"/>
       <button class="wb-bt" onclick="sub()">게시</button>
     </div>
     <div class="ch">
@@ -492,7 +492,7 @@ function card(p){
   const rm={};pr.forEach(r=>rm[r.emoji]=(rm[r.emoji]||0)+1);
   const isOpen=open.has(p.id);
   return`<div class="pcard">
-  <div class="pt"><span class="pbg">S4</span><span class="ptm">${ago(p.created_at)}</span></div>
+  <div class="pt"><span class="pbg">MASK</span><span class="ptm">${ago(p.created_at)}</span></div>
   <div class="pbd">${esc(p.content)}</div>
   <div class="er">${EM.map(e=>{const k=p.id+'-'+e,a=clicked.has(k);return`<button class="eb${a?' ac':''}" onclick="rxn('${p.id}','${e}')">${e}<span>${rm[e]||0}</span></button>`;}).join('')}</div>
   <div class="cbr"><input class="ci" id="ci-${p.id}" placeholder="댓글 달기..." onkeydown="if(event.key==='Enter')cmt('${p.id}')"/><button class="cs" onclick="cmt('${p.id}')">게시</button></div>
