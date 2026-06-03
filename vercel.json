@@ -2,7 +2,6 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    {"source": "/", "destination": "/blank/index.html"},
     {"source": "/truthlens", "destination": "/truthlens/index.html"},
     {"source": "/blank", "destination": "/blank/index.html"},
     {"source": "/mask", "destination": "/mask/index.html"},
